@@ -132,7 +132,7 @@ export default function FeaturesPage() {
                   </div>
 
                   <div className={isReversed ? 'lg:order-1' : ''}>
-                    {feature.demo === 'food' ? (
+                    {'demo' in feature && feature.demo === 'food' ? (
                       <div className="rounded-[2.25rem] border border-black/6 bg-white/72 p-4 shadow-[0_26px_60px_rgba(102,88,69,0.10)] backdrop-blur sm:p-5">
                         <AIFoodAnalyzerDemo />
                       </div>
