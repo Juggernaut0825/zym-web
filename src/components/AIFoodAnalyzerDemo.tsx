@@ -1,140 +1,140 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+
+const foods = [
+  { name: 'Grilled Chicken Salad', calories: 450, protein: 42, carbs: 18, fat: 22, accent: 'lc' },
+  { name: 'Protein Smoothie', calories: 320, protein: 35, carbs: 28, fat: 8, accent: 'zj' },
+  { name: 'Salmon with Rice', calories: 580, protein: 38, carbs: 45, fat: 24, accent: 'lc' },
+] as const
 
 export function AIFoodAnalyzerDemo() {
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [showResult, setShowResult] = useState(false)
   const [currentFood, setCurrentFood] = useState(0)
 
-  const foods = [
-    { name: 'Grilled Chicken Salad', calories: 450, protein: 42, carbs: 18, fat: 22, emoji: '🥗' },
-    { name: 'Protein Smoothie', calories: 320, protein: 35, carbs: 28, fat: 8, emoji: '🥤' },
-    { name: 'Salmon with Rice', calories: 580, protein: 38, carbs: 45, fat: 24, emoji: '🍣' },
-  ]
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentFood((prev) => (prev + 1) % foods.length)
     }, 4000)
+
     return () => clearInterval(interval)
-  }, [foods.length])
+  }, [])
 
   const handleAnalyze = () => {
     setIsAnalyzing(true)
     setShowResult(false)
+
     setTimeout(() => {
       setIsAnalyzing(false)
       setShowResult(true)
-    }, 2000)
+    }, 1600)
   }
 
   const food = foods[currentFood]
+  const accent = food.accent === 'lc'
+    ? {
+        tint: 'bg-[#f28a3a]/10',
+        border: 'border-[#f28a3a]/18',
+        text: 'text-[#b16322]',
+        button: 'border-[#f28a3a]/28 bg-[linear-gradient(180deg,rgba(242,138,58,0.18),rgba(242,138,58,0.10))] text-[#7b4517]',
+        highlight: 'bg-[#f28a3a]',
+      }
+    : {
+        tint: 'bg-[#6c7cf6]/10',
+        border: 'border-[#6c7cf6]/18',
+        text: 'text-[#4251cb]',
+        button: 'border-[#6c7cf6]/28 bg-[linear-gradient(180deg,rgba(108,124,246,0.16),rgba(108,124,246,0.08))] text-[#3642a8]',
+        highlight: 'bg-[#6c7cf6]',
+      }
 
   return (
-    <div className="relative w-full max-w-md mx-auto">
-      {/* Main demo container */}
-      <div className="relative bg-gradient-to-br from-zinc-900 to-zinc-950 rounded-3xl p-6 border border-zinc-800 shadow-2xl overflow-hidden">
-        {/* Glow effect */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-zym-500/30 rounded-full blur-3xl" />
+    <div className="relative mx-auto w-full max-w-md">
+      <div className="absolute -left-4 top-10 h-14 w-14 rounded-full bg-[#f28a3a]/8 blur-2xl" />
+      <div className="absolute -right-3 bottom-14 h-16 w-16 rounded-full bg-[#6c7cf6]/8 blur-2xl" />
 
-        {/* Header */}
-        <div className="relative flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 rounded-xl bg-zym-500/20 flex items-center justify-center">
-            <svg className="w-5 h-5 text-zym-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-          </div>
+      <div className="relative overflow-hidden rounded-[2rem] border border-black/6 bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(247,244,237,0.96)_100%)] p-5 shadow-[0_24px_50px_rgba(102,88,69,0.10)] sm:p-6">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(242,138,58,0.08),_transparent_24%),radial-gradient(circle_at_82%_18%,_rgba(108,124,246,0.08),_transparent_24%)]" />
+
+        <div className="relative flex items-start justify-between gap-4">
           <div>
-            <h3 className="text-white font-semibold">AI Food Analyzer</h3>
-            <p className="text-zinc-500 text-sm">Powered by vision AI</p>
+            <div className="inline-flex items-center gap-2 rounded-full border border-black/6 bg-white/84 px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#7a756d]">
+              <span className="h-2 w-2 rounded-full bg-[#6c7cf6]" />
+              Live demo
+            </div>
+            <h3 className="mt-4 font-body text-[1.55rem] font-extrabold tracking-[-0.03em] text-[#1f1f1f]">
+              AI Food Analyzer
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-[#66646e]">One shared system, fast nutrition feedback, and coaching tone that adapts without changing the capability.</p>
+          </div>
+          <div className={`rounded-full border px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] ${accent.border} ${accent.tint} ${accent.text}`}>
+            {food.accent === 'lc' ? 'LC tone' : 'ZJ tone'}
           </div>
         </div>
 
-        {/* Food display area */}
-        <div className="relative bg-zinc-800/50 rounded-2xl p-6 mb-4 min-h-[140px] flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-6xl mb-3 transition-all duration-500" key={currentFood}>
-              {food.emoji}
+        <div className="relative mt-6 overflow-hidden rounded-[1.6rem] border border-black/6 bg-white/84 p-5">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#87827b]">Selected meal</p>
+              <p className="mt-1 text-lg font-bold text-[#1f1f1f]">{food.name}</p>
             </div>
-            <p className="text-white font-medium">{food.name}</p>
-            <p className="text-zinc-500 text-sm mt-1">Tap to analyze</p>
+            <div className="rounded-full border border-black/6 bg-[#f7f5f0] px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#7e796f]">
+              Camera ready
+            </div>
           </div>
 
-          {/* Scanning animation overlay */}
+          <div className="mt-5 grid grid-cols-2 gap-3">
+            <div className="rounded-[1.35rem] border border-[#f28a3a]/12 bg-[#fff7f0] p-4">
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#a06b46]">Calories</p>
+              <p className="mt-2 text-2xl font-extrabold tracking-[-0.03em] text-[#1f1f1f]">{food.calories}</p>
+            </div>
+            <div className="rounded-[1.35rem] border border-[#6c7cf6]/12 bg-[#f7f8ff] p-4">
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#6670b8]">Protein</p>
+              <p className="mt-2 text-2xl font-extrabold tracking-[-0.03em] text-[#1f1f1f]">{food.protein}g</p>
+            </div>
+            <div className="rounded-[1.35rem] border border-black/6 bg-[#faf8f3] p-4">
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#8b857a]">Carbs</p>
+              <p className="mt-2 text-2xl font-extrabold tracking-[-0.03em] text-[#1f1f1f]">{food.carbs}g</p>
+            </div>
+            <div className="rounded-[1.35rem] border border-black/6 bg-[#faf8f3] p-4">
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#8b857a]">Fat</p>
+              <p className="mt-2 text-2xl font-extrabold tracking-[-0.03em] text-[#1f1f1f]">{food.fat}g</p>
+            </div>
+          </div>
+
           {isAnalyzing && (
-            <div className="absolute inset-0 bg-zym-500/10 rounded-2xl overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-zym-400/30 to-transparent animate-scan" />
+            <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[1.6rem] bg-white/56">
+              <div className="absolute inset-x-0 top-0 h-16 bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(108,124,246,0.18)_45%,rgba(242,138,58,0.16)_100%)] animate-scan" />
             </div>
           )}
         </div>
 
-        {/* Analyze button */}
         <button
+          type="button"
           onClick={handleAnalyze}
           disabled={isAnalyzing}
-          className="w-full py-3 bg-zym-500 hover:bg-zym-400 disabled:bg-zym-600 text-black font-semibold rounded-xl transition-all active:scale-95 disabled:cursor-not-allowed"
+          className={`mt-5 inline-flex w-full items-center justify-center rounded-[1.35rem] border px-5 py-3.5 text-sm font-bold uppercase tracking-[0.14em] shadow-[0_12px_28px_rgba(102,88,69,0.10)] transition-transform duration-200 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70 ${accent.button}`}
         >
-          {isAnalyzing ? (
-            <span className="flex items-center justify-center gap-2">
-              <svg className="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-              </svg>
-              Analyzing...
-            </span>
-          ) : (
-            'Analyze Food'
-          )}
+          {isAnalyzing ? 'Analyzing meal' : 'Analyze food'}
         </button>
 
-        {/* Results panel */}
         {showResult && (
-          <div className="mt-4 p-4 bg-zinc-800/30 rounded-xl border border-zinc-700/50 animate-fadeIn">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-zym-400 text-sm font-medium">Nutrition Facts</span>
-              <span className="text-zinc-500 text-xs">per serving</span>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
-                <p className="text-2xl font-bold text-white">{food.calories}</p>
-                <p className="text-zinc-500 text-xs">Calories</p>
+          <div className="mt-5 rounded-[1.5rem] border border-black/6 bg-white/90 p-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#88837b]">Coaching feedback</p>
+                <p className="mt-1 text-sm leading-6 text-[#57545d]">
+                  {food.accent === 'lc'
+                    ? 'Strong protein base and balanced calories. Keep building a steady routine meal by meal.'
+                    : 'Protein is covered. Keep the rest of the day consistent and do not let the plan drift.'}
+                </p>
               </div>
-              <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
-                <p className="text-2xl font-bold text-accent-warm">{food.protein}g</p>
-                <p className="text-zinc-500 text-xs">Protein</p>
-              </div>
-              <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
-                <p className="text-2xl font-bold text-accent-gold">{food.carbs}g</p>
-                <p className="text-zinc-500 text-xs">Carbs</p>
-              </div>
-              <div className="bg-zinc-800/50 rounded-lg p-3 text-center">
-                <p className="text-2xl font-bold text-accent-coral">{food.fat}g</p>
-                <p className="text-zinc-500 text-xs">Fat</p>
+              <div className="rounded-full border border-black/6 bg-[#f7f5f0] px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#7e796f]">
+                Shared capability
               </div>
             </div>
           </div>
         )}
-      </div>
-
-      {/* Floating elements */}
-      <div className="absolute -top-6 -right-6 w-16 h-16 bg-zym-500/20 rounded-full blur-xl animate-pulse" />
-      <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-accent-warm/20 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }} />
-
-      {/* Feature badges */}
-      <div className="absolute -left-12 top-1/4 bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 shadow-xl animate-float hidden lg:block">
-        <div className="flex items-center gap-2">
-          <span className="text-lg">📸</span>
-          <span className="text-white text-sm font-medium">Snap & Track</span>
-        </div>
-      </div>
-
-      <div className="absolute -right-12 bottom-1/4 bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 shadow-xl animate-float hidden lg:block" style={{ animationDelay: '1.5s' }}>
-        <div className="flex items-center gap-2">
-          <span className="text-lg">⚡</span>
-          <span className="text-white text-sm font-medium">Instant Results</span>
-        </div>
       </div>
     </div>
   )
