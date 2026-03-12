@@ -8,7 +8,7 @@ export function Footer() {
         <div className="mb-12 grid gap-12 md:grid-cols-4">
           <div>
             <Link href="/" className="mb-4 flex items-center gap-3">
-              <Image src="/logo.svg" alt="ZYM Logo" width={32} height={32} />
+              <Image src="/logo-mark.svg" alt="ZYM Logo" width={32} height={32} />
               <span className="text-xl font-bold text-[#1f1f1f]" style={{ fontFamily: 'Syne, system-ui, sans-serif' }}>ZYM</span>
             </Link>
             <p className="text-sm text-[#5f5a52]">AI-native lifestyle platform. Starting with health.</p>
@@ -25,8 +25,8 @@ export function Footer() {
           <div>
             <h3 className="mb-4 font-semibold text-[#1f1f1f]">Company</h3>
             <div className="space-y-2">
-              <Link href="/careers" className="block text-sm text-[#5f5a52] transition-colors hover:text-[#f28a3a]">Careers</Link>
-              <Link href="/open-source" className="block text-sm text-[#5f5a52] transition-colors hover:text-[#6c7cf6]">Open Source</Link>
+              {/* <Link href="/careers" className="block text-sm text-[#5f5a52] transition-colors hover:text-[#f28a3a]">Careers</Link> */}
+              {/* <Link href="/open-source" className="block text-sm text-[#5f5a52] transition-colors hover:text-[#6c7cf6]">Open Source</Link> */}
             </div>
           </div>
 
