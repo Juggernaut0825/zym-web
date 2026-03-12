@@ -6,13 +6,13 @@ import { Footer } from '@/components/Footer'
 
 const coreFeatures = [
   {
-    title: 'LC - Gentle encouragement',
-    desc: 'Warm, supportive, and reassuring. LC helps you stay on track with a softer, more encouraging tone.',
+    title: 'LC - Tough accountability',
+    desc: 'Stricter, sharper, and more demanding. LC pushes you harder when you need structure, discipline, and direct feedback.',
     accent: 'lc',
   },
   {
-    title: 'ZJ - Tough accountability',
-    desc: 'Stricter, sharper, and more demanding. ZJ pushes you harder when you need structure, discipline, and direct feedback.',
+    title: 'ZJ - Gentle encouragement',
+    desc: 'Warm, supportive, and reassuring. ZJ helps you stay on track with a softer, more encouraging tone.',
     accent: 'zj',
   },
 ] as const
@@ -48,8 +48,8 @@ const capabilities = [
 ] as const
 
 const communityPills = [
-  { label: 'LC encouragement', tone: 'lc' },
-  { label: 'ZJ discipline', tone: 'zj' },
+  { label: 'LC discipline', tone: 'lc' },
+  { label: 'ZJ encouragement', tone: 'zj' },
   { label: 'Shared intelligence', tone: 'neutral' },
 ] as const
 
@@ -136,11 +136,11 @@ export default function Home() {
                   <div className="mt-4 grid gap-3 sm:grid-cols-2">
                     <div className="rounded-[1.55rem] border border-[#f28a3a]/12 bg-[#f28a3a]/6 px-4 py-3">
                       <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#a16a45]">LC coaching style</p>
-                      <p className="mt-2 text-sm font-semibold text-[#4f3927]">Protein pacing is on track. Keep going, you are building something steady.</p>
+                      <p className="mt-2 text-sm font-semibold text-[#4f3927]">Breakfast is logged. Workout plan is ready. Stay on schedule.</p>
                     </div>
                     <div className="rounded-[1.55rem] border border-[#6c7cf6]/12 bg-[#6c7cf6]/6 px-4 py-3">
                       <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#5d68be]">ZJ coaching style</p>
-                      <p className="mt-2 text-sm font-semibold text-[#303a86]">Breakfast is logged. Workout plan is ready. Stay on schedule.</p>
+                      <p className="mt-2 text-sm font-semibold text-[#303a86]">Protein pacing is on track. Keep going, you are building something steady.</p>
                     </div>
                   </div>
                 </div>
@@ -210,7 +210,7 @@ export default function Home() {
               </p>
             </div>
             <p className="max-w-md text-base leading-7 text-[#84818d]">
-              These previews stay lighter and cleaner than the hero while showing the same product through two coaching personalities: LC warmer and ZJ more disciplined.
+              These previews stay lighter and cleaner than the hero while showing the same product through two coaching personalities: LC more disciplined and ZJ warmer.
             </p>
           </div>
 
