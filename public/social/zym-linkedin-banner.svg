@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1584" height="396" viewBox="0 0 1584 396" fill="none">
+  <defs>
+    <linearGradient id="brandGradientBanner" x1="132" y1="62" x2="1372" y2="382" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f28a3a"/>
+      <stop offset="0.52" stop-color="#de7a35"/>
+      <stop offset="1" stop-color="#6c7cf6"/>
+    </linearGradient>
+    <radialGradient id="bgGlowOrangeBanner" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(214 86) rotate(42.3) scale(308 188)">
+      <stop stop-color="#f28a3a" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#f28a3a" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bgGlowBlueBanner" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1326 116) rotate(138.4) scale(312 196)">
+      <stop stop-color="#6c7cf6" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#6c7cf6" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softShadowBanner" x="0" y="0" width="1584" height="396" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#665845" flood-opacity="0.12"/>
+    </filter>
+    <filter id="logoGlowBanner" x="0" y="0" width="120" height="120" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1584" height="396" rx="24" fill="#f7f5f0"/>
+  <rect width="1584" height="396" rx="24" fill="url(#bgGlowOrangeBanner)"/>
+  <rect width="1584" height="396" rx="24" fill="url(#bgGlowBlueBanner)"/>
+
+  <g filter="url(#softShadowBanner)">
+    <rect x="24" y="24" width="1536" height="348" rx="32" fill="#ffffff" fill-opacity="0.9"/>
+    <rect x="24.5" y="24.5" width="1535" height="347" rx="31.5" stroke="#121929" stroke-opacity="0.08"/>
+  </g>
+
+  <g transform="translate(80 72)">
+    <circle cx="34" cy="34" r="34" fill="#0a0a0a" stroke="url(#brandGradientBanner)" stroke-width="2"/>
+    <path d="M15 19H53V25.4L27.6 44.2H53V50.8H15V44.2L40.4 25.4H15V19Z" fill="url(#brandGradientBanner)" filter="url(#logoGlowBanner)"/>
+    <path d="M44.5 16L51 28H46.5L51 40L44.5 28H49Z" fill="#fbbf24" fill-opacity="0.95"/>
+  </g>
+
+  <text x="172" y="120" fill="#1f1f1f" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="-0.02em">ZYM</text>
+  <text x="172" y="154" fill="#7b766e" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="0.22em">AI-NATIVE FITNESS SPACE</text>
+
+  <text x="80" y="198" fill="#1f1f1f" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="48" font-weight="800" letter-spacing="-0.055em">Where AI coaching,</text>
+  <text x="80" y="254" fill="#1f1f1f" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="48" font-weight="800" letter-spacing="-0.055em">tracking, and</text>
+  <text x="80" y="310" fill="#1f1f1f" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="48" font-weight="800" letter-spacing="-0.055em">community connect.</text>
+
+  <text x="82" y="330" fill="#5f5a52" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="23" font-weight="500" letter-spacing="-0.02em">
+    AI coaching that feels like messaging, with tracking and community in one place.
+  </text>
+
+  <g filter="url(#softShadowBanner)">
+    <rect x="1046" y="62" width="438" height="272" rx="30" fill="#fffdfa"/>
+    <rect x="1046.5" y="62.5" width="437" height="271" rx="29.5" stroke="#121929" stroke-opacity="0.08"/>
+
+    <rect x="1080" y="94" width="370" height="56" rx="20" fill="#ffffff"/>
+    <rect x="1080.5" y="94.5" width="369" height="55" rx="19.5" stroke="#121929" stroke-opacity="0.08"/>
+    <circle cx="1114" cy="122" r="10" fill="#6c7cf6"/>
+    <text x="1138" y="128" fill="#4a57c9" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="0.08em">COACH</text>
+    <text x="1264" y="128" fill="#7b766e" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="600">message-first support</text>
+
+    <rect x="1080" y="166" width="178" height="126" rx="24" fill="#fff7f0"/>
+    <rect x="1080.5" y="166.5" width="177" height="125" rx="23.5" stroke="#f28a3a" stroke-opacity="0.14"/>
+    <circle cx="1114" cy="202" r="9" fill="#f28a3a"/>
+    <text x="1136" y="208" fill="#b16322" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="0.08em">TRACK</text>
+    <text x="1112" y="242" fill="#2f3548" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="-0.03em">Calories,</text>
+    <text x="1112" y="270" fill="#2f3548" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="-0.03em">workouts, habits.</text>
+
+    <rect x="1272" y="166" width="178" height="126" rx="24" fill="#f7f8ff"/>
+    <rect x="1272.5" y="166.5" width="177" height="125" rx="23.5" stroke="#6c7cf6" stroke-opacity="0.14"/>
+    <circle cx="1306" cy="202" r="9" fill="#6c7cf6"/>
+    <text x="1328" y="208" fill="#4a57c9" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="0.08em">COMMUNITY</text>
+    <text x="1304" y="242" fill="#2f3548" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="-0.03em">Friends, groups,</text>
+    <text x="1304" y="270" fill="#2f3548" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="-0.03em">shared momentum.</text>
+  </g>
+</svg>
