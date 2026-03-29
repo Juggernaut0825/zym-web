@@ -41,8 +41,8 @@ export function Footer() {
         <div className="flex flex-col items-center justify-between gap-4 border-t border-[#ddd4c7] pt-8 md:flex-row">
           <p className="text-sm text-[#7b766e]">2026 ZYM. Building the future of lifestyle support.</p>
           <div className="flex items-center gap-6 text-sm text-[#7b766e]">
-            <a href="#" className="transition-colors hover:text-[#f28a3a]">Privacy</a>
-            <a href="#" className="transition-colors hover:text-[#6c7cf6]">Terms</a>
+            <Link href="https://zym8.com/privacy.html" className="transition-colors hover:text-[#f28a3a]">Privacy</Link>
+            <Link href="https://zym8.com/terms.html" className="transition-colors hover:text-[#6c7cf6]">Terms</Link>
           </div>
         </div>
       </div>
