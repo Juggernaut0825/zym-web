@@ -21,11 +21,7 @@ aws s3 sync "${OUT_DIR}/" "s3://${BUCKET_NAME}/" \
   --delete \
   --exclude "admin.html" \
   --exclude "admin.css" \
-  --exclude "admin.js" \
-  --exclude "privacy.html" \
-  --exclude "terms.html" \
-  --exclude "legal.css" \
-  --exclude "logo-120.png"
+  --exclude "admin.js"
 
 aws cloudfront create-invalidation \
   --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" \
