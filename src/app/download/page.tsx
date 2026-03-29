@@ -13,25 +13,23 @@ export default function DownloadPage() {
           <div className="rounded-[2rem] border border-black/6 bg-white/86 p-10 text-center shadow-[0_24px_50px_rgba(102,88,69,0.10)] backdrop-blur">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#f28a3a]/20 bg-[#f28a3a]/8 px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-[#9a5a22]">
               <span className="h-2.5 w-2.5 rounded-full bg-[#f28a3a]" />
-              App download
+              Web app
             </div>
 
             <h1 className="mt-6 text-4xl font-extrabold tracking-[-0.03em] md:text-5xl">
-              Download coming soon.
+              Open ZYM in the app.
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-[#66646e]">
-              We are preparing the mobile app for launch. You can leave this page bookmarked and we will open downloads soon.
+              Sign in on the live web app to access coaching, tracking, group chat, and community features right now.
             </p>
 
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <button
-                type="button"
-                disabled
-                aria-disabled="true"
-                className="inline-flex cursor-not-allowed items-center justify-center rounded-[1.35rem] border border-[#6c7cf6]/20 bg-[#6c7cf6]/8 px-8 py-4 text-sm font-bold uppercase tracking-[0.16em] text-[#4f5abc] opacity-70"
+              <a
+                href="https://app.zym8.com/login"
+                className="inline-flex items-center justify-center rounded-[1.35rem] border border-[#6c7cf6]/20 bg-[#6c7cf6]/8 px-8 py-4 text-sm font-bold uppercase tracking-[0.16em] text-[#4f5abc] transition-colors hover:bg-[#6c7cf6]/12"
               >
-                Web App (Coming Soon)
-              </button>
+                Continue to Login
+              </a>
               <Link
                 href="/"
                 className="inline-flex items-center justify-center rounded-[1.35rem] border border-black/10 bg-white px-8 py-4 text-sm font-bold uppercase tracking-[0.16em] text-[#4f4a42] transition-colors hover:bg-[#f8f4ec]"

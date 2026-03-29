@@ -82,12 +82,12 @@ export default function Home() {
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <Link
-                href="/download"
+              <a
+                href="https://app.zym8.com/login"
                 className="inline-flex items-center justify-center rounded-[1.45rem] border border-[#f28a3a]/30 bg-[linear-gradient(180deg,rgba(242,138,58,0.18),rgba(242,138,58,0.10))] px-8 py-4 text-sm font-bold uppercase tracking-[0.16em] text-[#7b4517] shadow-[0_14px_30px_rgba(94,71,46,0.12)] transition-transform duration-200 hover:-translate-y-1 hover:border-[#f28a3a]/45"
               >
                 Get Started
-              </Link>
+              </a>
               {/* <Link
                 href="/features"
                 className="inline-flex items-center justify-center rounded-[1.45rem] border border-[#6c7cf6]/28 bg-[linear-gradient(180deg,rgba(108,124,246,0.14),rgba(108,124,246,0.07))] px-8 py-4 text-sm font-bold uppercase tracking-[0.16em] text-[#3642a8] shadow-[0_14px_30px_rgba(67,81,176,0.10)] transition-transform duration-200 hover:-translate-y-1 hover:border-[#6c7cf6]/42"

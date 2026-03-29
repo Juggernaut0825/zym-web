@@ -28,12 +28,12 @@ export function Navbar() {
             Careers
           </Link> */}
         </div>
-        <Link
-          href="/download"
+        <a
+          href="https://app.zym8.com/login"
           className="rounded-full border border-[#f28a3a]/30 bg-[linear-gradient(180deg,rgba(242,138,58,0.18),rgba(242,138,58,0.10))] px-5 py-2.5 text-sm font-semibold text-[#7b4517] shadow-[0_10px_24px_rgba(94,71,46,0.10)] transition-transform duration-200 hover:-translate-y-0.5 hover:border-[#f28a3a]/45"
         >
           Get Started
-        </Link>
+        </a>
       </div>
     </nav>
   )
