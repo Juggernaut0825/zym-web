@@ -8,7 +8,7 @@ const foods = [
   { name: 'Salmon with Rice', calories: 580, protein: 38, carbs: 45, fat: 24, accent: 'lc' },
 ] as const
 
-export function AIFoodAnalyzerDemo() {
+export function AIFoodAnalyzerDemo({ immersive = false }: { immersive?: boolean }) {
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [showResult, setShowResult] = useState(false)
   const [currentFood, setCurrentFood] = useState(0)
@@ -52,6 +52,18 @@ export function AIFoodAnalyzerDemo() {
     <div className="relative mx-auto w-full max-w-md">
       <div className="absolute -left-4 top-10 h-14 w-14 rounded-full bg-[#f28a3a]/8 blur-2xl" />
       <div className="absolute -right-3 bottom-14 h-16 w-16 rounded-full bg-[#6c7cf6]/8 blur-2xl" />
+      {immersive && (
+        <>
+          <div className="absolute -right-6 top-12 hidden rounded-[1.3rem] border border-white/70 bg-white/82 px-4 py-3 shadow-[0_18px_34px_rgba(102,88,69,0.10)] backdrop-blur md:block">
+            <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-[#8b857c]">Capture</p>
+            <p className="mt-1 text-sm font-bold text-[#1f1f1f]">Photo-first input</p>
+          </div>
+          <div className="absolute -left-6 bottom-24 hidden rounded-[1.3rem] border border-white/70 bg-white/82 px-4 py-3 shadow-[0_18px_34px_rgba(102,88,69,0.10)] backdrop-blur md:block">
+            <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-[#8b857c]">Feedback</p>
+            <p className="mt-1 text-sm font-bold text-[#1f1f1f]">Macros + coaching</p>
+          </div>
+        </>
+      )}
 
       <div className="relative overflow-hidden rounded-[2rem] border border-black/6 bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(247,244,237,0.96)_100%)] p-5 shadow-[0_24px_50px_rgba(102,88,69,0.10)] sm:p-6">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(242,138,58,0.08),_transparent_24%),radial-gradient(circle_at_82%_18%,_rgba(108,124,246,0.08),_transparent_24%)]" />
@@ -65,14 +77,42 @@ export function AIFoodAnalyzerDemo() {
             <h3 className="mt-4 font-body text-[1.55rem] font-extrabold tracking-[-0.03em] text-[#1f1f1f]">
               AI Food Analyzer
             </h3>
-            <p className="mt-2 text-sm leading-6 text-[#66646e]">One shared system, fast nutrition feedback, and coaching tone that adapts without changing the capability.</p>
+            <p className="mt-2 text-sm leading-6 text-[#66646e]">
+              {immersive
+                ? 'A premium nutrition scene: capture the meal, surface the macros, and return coaching in one compact flow.'
+                : 'One shared system, fast nutrition feedback, and coaching tone that adapts without changing the capability.'}
+            </p>
           </div>
           <div className={`rounded-full border px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] ${accent.border} ${accent.tint} ${accent.text}`}>
             {food.accent === 'lc' ? 'LC tone' : 'ZJ tone'}
           </div>
         </div>
 
-        <div className="relative mt-6 overflow-hidden rounded-[1.6rem] border border-black/6 bg-white/84 p-5">
+        {immersive && (
+          <div className="relative mt-5 grid gap-3 sm:grid-cols-3">
+            {[
+              { label: 'Capture speed', value: '< 10 sec', tone: 'neutral' },
+              { label: 'Nutrition view', value: '4 macros', tone: 'lc' },
+              { label: 'Coach reply', value: 'Adaptive', tone: 'zj' },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className={`rounded-[1.2rem] border px-4 py-3 ${
+                  item.tone === 'lc'
+                    ? 'border-[#f28a3a]/12 bg-[#fff7ef]'
+                    : item.tone === 'zj'
+                      ? 'border-[#6c7cf6]/12 bg-[#f6f7ff]'
+                      : 'border-black/6 bg-white/82'
+                }`}
+              >
+                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[#8b857c]">{item.label}</p>
+                <p className="mt-2 text-base font-bold text-[#1f1f1f]">{item.value}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className={`relative mt-6 overflow-hidden rounded-[1.6rem] border border-black/6 bg-white/84 p-5 ${immersive ? 'md:mt-7' : ''}`}>
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#87827b]">Selected meal</p>
@@ -133,6 +173,15 @@ export function AIFoodAnalyzerDemo() {
                 Shared capability
               </div>
             </div>
+          </div>
+        )}
+
+        {immersive && (
+          <div className="mt-5 rounded-[1.5rem] border border-black/6 bg-[linear-gradient(180deg,rgba(255,255,255,0.92)_0%,rgba(245,241,234,0.92)_100%)] p-4">
+            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#88837b]">Why this section matters</p>
+            <p className="mt-2 text-sm leading-6 text-[#57545d]">
+              Nutrition becomes a visual story with three beats: capture, interpret, and respond. That makes the whole capability easier to understand at a glance.
+            </p>
           </div>
         )}
       </div>
