@@ -12,41 +12,44 @@ const coachProfiles = [
     name: 'ZJ',
     title: 'Supportive, calmer, steady',
     desc: 'Gentle, lower-pressure support that helps you build momentum without turning every day into a grind.',
-    quote: 'I’ll help you build steady habits without making fitness feel overwhelming.',
+    quote: "I'll help you build steady habits without making fitness feel overwhelming.",
     tags: ['Gentle guidance', 'Habit building', 'Lower pressure'],
-    image: '/images/coaches/zj.png',
-    accent: 'lc',
+    image: '/images/homepage/coach-zj.jpg',
+    accent: 'zj',
   },
   {
     id: 'lc',
     name: 'LC',
     title: 'Sharper, structured, accountable',
     desc: 'A more direct coaching style built for consistency, structure, and catching drift before it compounds.',
-    quote: 'I’ll keep the plan sharp and call out drift before it becomes a pattern.',
+    quote: "I'll keep the plan sharp and call out drift before it becomes a pattern.",
     tags: ['Strong accountability', 'Structure', 'Performance focus'],
-    image: '/images/coaches/lc.png',
-    accent: 'zj',
+    image: '/images/homepage/coach-lc.jpg',
+    accent: 'lc',
   },
 ] as const
 
 const proofCards = [
   {
-    title: 'Train together',
-    desc: 'Shared routines, visible momentum.',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=800&fit=crop',
-    accent: 'lc',
-  },
-  {
-    title: 'Track progress',
-    desc: 'Meals, workouts, recovery in one view.',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=800&fit=crop',
+    title: 'Community check-ins',
+    desc: 'Real posts, comments, and shared accountability.',
+    image: '/images/homepage/app-community.png',
     accent: 'zj',
+    crop: 'object-[50%_20%]',
   },
   {
-    title: 'Live better',
-    desc: 'Habit-building with memory that stays personal.',
-    image: 'https://images.unsplash.com/photo-1546483875-ad9014c88eba?w=800&h=800&fit=crop',
+    title: 'Routine tracking',
+    desc: 'Calendar views for meals, training, weight, and trends.',
+    image: '/images/homepage/app-calendar-details.png',
+    accent: 'zj',
+    crop: 'object-[50%_22%]',
+  },
+  {
+    title: 'Coach accountability',
+    desc: 'Direct AI coach messages that keep progress visible.',
+    image: '/images/homepage/app-coach-chat.png',
     accent: 'lc',
+    crop: 'object-[50%_12%]',
   },
 ] as const
 
@@ -60,8 +63,8 @@ const capabilities = [
 ] as const
 
 const communityPills = [
-  { label: 'LC encouragement', tone: 'lc' },
-  { label: 'ZJ discipline', tone: 'zj' },
+  { label: 'ZJ encouragement', tone: 'zj' },
+  { label: 'LC discipline', tone: 'lc' },
   { label: 'Shared intelligence', tone: 'neutral' },
 ] as const
 
@@ -105,7 +108,7 @@ function RevealBlock({
   className?: string
   delay?: number
 }) {
-  const { ref, visible } = useRevealOnScroll<HTMLElement>()
+  const { ref, visible } = useRevealOnScroll<HTMLDivElement>()
 
   return (
     <div
@@ -167,7 +170,7 @@ export default function Home() {
             <div className="mt-12 grid gap-3 sm:grid-cols-3">
               {[
                 { label: 'Coach tone', value: 'LC + ZJ' },
-                { label: 'Shared space', value: 'Meals • Training' },
+                { label: 'Shared space', value: 'Meals + training' },
                 { label: 'Designed for', value: 'Daily consistency' },
               ].map((item) => (
                 <div key={item.label} className="home-metric-card rounded-[1.45rem] border border-black/6 bg-white/70 px-4 py-4 backdrop-blur">
@@ -178,52 +181,43 @@ export default function Home() {
             </div>
           </RevealBlock>
 
-          <RevealBlock className="relative mx-auto flex w-full justify-end lg:justify-end" delay={100}>
-            <div className="relative w-full max-w-[23rem] pt-8 lg:max-w-[22.5rem] lg:translate-x-4 xl:max-w-[23.5rem] xl:translate-x-6">
-              <div className="absolute inset-0 rotate-[3deg] rounded-[2.35rem] border border-black/6 bg-white/34" />
+          <RevealBlock className="relative mx-auto flex w-full justify-center lg:justify-end" delay={100}>
+            <div className="hero-product-stack relative w-full max-w-[25rem] pt-8 lg:max-w-[25.5rem] lg:translate-x-4 xl:max-w-[26.5rem] xl:translate-x-6">
+              <div className="absolute inset-x-8 bottom-2 h-24 rounded-full bg-[#6c7cf6]/10 blur-3xl" />
+              <div className="absolute -left-4 top-20 z-10 hidden w-[46%] rotate-[-7deg] overflow-hidden rounded-[1.8rem] border border-white/80 bg-white p-2 shadow-[0_24px_52px_rgba(67,81,176,0.16)] sm:block">
+                <div className="relative aspect-[0.46] overflow-hidden rounded-[1.35rem] bg-[#f7f5f0]">
+                  <Image
+                    src="/images/homepage/app-community.png"
+                    alt="ZYM community screen"
+                    fill
+                    sizes="12rem"
+                    className="object-cover object-[50%_18%] contrast-[1.02] saturate-[1.03]"
+                  />
+                </div>
+              </div>
 
-              <div className="relative overflow-hidden rounded-[2.35rem] border border-black/8 bg-[rgba(255,255,255,0.82)] p-4 shadow-[0_30px_80px_rgba(102,88,69,0.12)] backdrop-blur">
-                <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(transparent_0%,rgba(31,31,31,0.12)_50%,transparent_100%)] bg-[length:100%_8px]" />
-                <div className="relative rounded-[1.8rem] border border-black/6 bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(246,241,234,0.96)_100%)] p-5 sm:p-6">
-                  <div className="flex items-center justify-between rounded-[1.35rem] border border-black/6 bg-white/70 px-4 py-3">
-                    <div>
-                      <p className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-[#7b7b7b]">ZYM dashboard</p>
-                      <p className="mt-1 text-lg font-bold text-[#1f1f1f]">Today&apos;s overview</p>
-                    </div>
-                    <div className="rounded-full border border-[#6c7cf6]/18 bg-[#6c7cf6]/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#4a57c9]">
-                      Synced
-                    </div>
-                  </div>
+              <div className="relative ml-auto w-[78%] overflow-hidden rounded-[2.2rem] border border-black/8 bg-white p-3 shadow-[0_30px_80px_rgba(102,88,69,0.15)]">
+                <div className="relative aspect-[0.46] overflow-hidden rounded-[1.7rem] bg-[#f7f5f0]">
+                  <Image
+                    src="/images/homepage/app-calendar-summary.png"
+                    alt="ZYM calendar progress screen"
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 21rem, 72vw"
+                    className="object-cover object-[50%_16%] brightness-[1.01] contrast-[1.02] saturate-[1.02]"
+                  />
+                </div>
+              </div>
 
-                  <div className="mt-5 rounded-[1.65rem] border border-black/6 bg-white/78 p-4">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium text-[#7a7a7a]">Progress ring</p>
-                      <div className="rounded-full bg-[#f28a3a]/12 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#b16322]">
-                        Focus
-                      </div>
-                    </div>
-                    <div className="mt-4 flex items-center gap-4">
-                      <div className="relative flex h-24 w-24 items-center justify-center rounded-full border-[10px] border-[#6c7cf6]/24 text-2xl font-black text-[#1f1f1f] shadow-[0_0_0_8px_rgba(108,124,246,0.05)]">
-                        82%
-                      </div>
-                      <div className="space-y-2 text-sm text-[#666666]">
-                        <p>Meals analyzed</p>
-                        <p>Workout queued</p>
-                        <p>Recovery stable</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-[1.55rem] border border-[#f28a3a]/12 bg-[#f28a3a]/6 px-4 py-3">
-                      <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#a16a45]">LC coaching style</p>
-                      <p className="mt-2 text-sm font-semibold text-[#4f3927]">Protein pacing is on track. Keep going, you are building something steady.</p>
-                    </div>
-                    <div className="rounded-[1.55rem] border border-[#6c7cf6]/12 bg-[#6c7cf6]/6 px-4 py-3">
-                      <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#5d68be]">ZJ coaching style</p>
-                      <p className="mt-2 text-sm font-semibold text-[#303a86]">Breakfast is logged. Workout plan is ready. Stay on schedule.</p>
-                    </div>
-                  </div>
+              <div className="absolute -bottom-4 left-2 z-20 w-[52%] rotate-[5deg] overflow-hidden rounded-[1.8rem] border border-white/80 bg-white p-2 shadow-[0_24px_52px_rgba(242,138,58,0.16)]">
+                <div className="relative aspect-[0.46] overflow-hidden rounded-[1.35rem] bg-[#f7f5f0]">
+                  <Image
+                    src="/images/homepage/app-coach-chat.png"
+                    alt="ZYM LC coach chat screen"
+                    fill
+                    sizes="13rem"
+                    className="object-cover object-[50%_12%] contrast-[1.02] saturate-[1.03]"
+                  />
                 </div>
               </div>
             </div>
@@ -402,7 +396,7 @@ export default function Home() {
                           : 'bg-[#6c7cf6]/10 text-[#4251cb]'
                       }`}
                     >
-                      {activeCoach.accent === 'lc' ? 'Steady support mode' : 'Structured accountability mode'}
+                      {activeCoach.accent === 'lc' ? 'Structured accountability mode' : 'Steady support mode'}
                     </div>
 
                     <div
@@ -414,7 +408,7 @@ export default function Home() {
                     >
                       <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#8d887e]">Sample tone</p>
                       <p className="mt-3 text-lg font-semibold leading-8 tracking-[-0.02em] text-[#38353d]">
-                        “{activeCoach.quote}”
+                        "{activeCoach.quote}"
                       </p>
                     </div>
 
@@ -467,7 +461,7 @@ export default function Home() {
                   <img
                     src={card.image}
                     alt={card.title}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    className={`h-full w-full object-cover ${card.crop} brightness-[1.01] contrast-[1.02] saturate-[1.03] transition-transform duration-500 group-hover:scale-[1.03]`}
                   />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,19,25,0.04)_0%,rgba(17,19,25,0.16)_50%,rgba(17,19,25,0.55)_100%)]" />
                   <div className="absolute left-5 top-5">
