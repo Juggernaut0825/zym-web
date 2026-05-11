@@ -881,3 +881,183 @@ body {
     transition-duration: 560ms;
   }
 }
+
+/* Hero y-figure drift animation (subtle floating brand marks) */
+@keyframes hero-drift-a {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-14px) rotate(3deg); }
+}
+
+@keyframes hero-drift-b {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(10px) rotate(-2deg); }
+}
+
+@keyframes hero-drift-c {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33%      { transform: translate(6px, -8px) rotate(2deg); }
+  66%      { transform: translate(-6px, -4px) rotate(-2deg); }
+}
+
+.hero-drift-a { animation: hero-drift-a 11s ease-in-out infinite; will-change: transform; }
+.hero-drift-b { animation: hero-drift-b 13s ease-in-out infinite; will-change: transform; }
+.hero-drift-c { animation: hero-drift-c 17s ease-in-out infinite; will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-drift-a,
+  .hero-drift-b,
+  .hero-drift-c {
+    animation: none !important;
+  }
+}
+
+/* Hero giant wordmark — branded stamp behind the headline */
+.hero-wordmark {
+  font-family: 'Syne', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 32vw;
+  letter-spacing: -0.06em;
+  line-height: 0.85;
+  user-select: none;
+  background: linear-gradient(135deg, #f28a3a 0%, #6c7cf6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0.10;
+  white-space: nowrap;
+  animation: hero-wordmark-breath 9s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+@keyframes hero-wordmark-breath {
+  0%, 100% { opacity: 0.08; transform: scale(1); }
+  50%      { opacity: 0.14; transform: scale(1.015); }
+}
+
+@media (max-width: 768px) {
+  .hero-wordmark {
+    font-size: 42vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-wordmark {
+    animation: none !important;
+  }
+}
+
+/* Cinematic reveal — overrides the earlier .home-reveal / .features-reveal defaults
+   to give scroll entrances a slower, bigger Vast-style feel */
+.home-reveal {
+  transform: translateY(56px);
+  transition:
+    opacity 1100ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.features-reveal {
+  transform: translateY(52px) scale(0.985);
+  transition:
+    opacity 1000ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1000ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (max-width: 768px) {
+  .home-reveal {
+    transform: translateY(36px);
+    transition-duration: 800ms;
+  }
+  .features-reveal {
+    transform: translateY(34px) scale(0.99);
+    transition-duration: 800ms;
+  }
+}
+
+/* Sticky anchor nav: gentle fade-in on first appearance */
+@keyframes anchor-nav-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.anchor-nav-enter {
+  animation: anchor-nav-fade 600ms ease-out 200ms both;
+}
+
+/* Features Tier 3 image: cinematic scale entrance synced to reveal */
+.tier3-image {
+  transform: scale(0.94);
+  transition: transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.features-reveal.is-visible .tier3-image {
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anchor-nav-enter { animation: none !important; }
+  .tier3-image { transform: none !important; transition: none !important; }
+}
+
+/* Hero wordmark: horizontal gradient sweep stacked on the existing breath */
+.hero-wordmark {
+  background: linear-gradient(110deg, #f28a3a 0%, #b878dc 35%, #6c7cf6 50%, #b878dc 65%, #f28a3a 100%);
+  background-size: 300% 100%;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation:
+    hero-wordmark-breath 9s ease-in-out infinite,
+    hero-wordmark-sweep 16s linear infinite;
+}
+
+@keyframes hero-wordmark-sweep {
+  from { background-position: 0% 50%; }
+  to   { background-position: 300% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-wordmark {
+    animation: none !important;
+    background-position: 50% 50% !important;
+  }
+}
+
+/* Tier 3 directional slide-in: image enters from its own side,
+   text enters from the opposite side. Combined with a slight scale
+   on the image, this gives a Vast-style "page-flip" feel as each
+   detail block enters the viewport. */
+.tier3-image-l,
+.tier3-image-r {
+  opacity: 0;
+  transition: opacity 1200ms cubic-bezier(0.22, 1, 0.36, 1), transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.tier3-image-l { transform: translateX(-60px) scale(0.95); }
+.tier3-image-r { transform: translateX(60px) scale(0.95); }
+.features-reveal.is-visible .tier3-image-l,
+.features-reveal.is-visible .tier3-image-r {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.tier3-text-l,
+.tier3-text-r {
+  opacity: 0;
+  transition: opacity 1100ms cubic-bezier(0.22, 1, 0.36, 1) 120ms, transform 1200ms cubic-bezier(0.22, 1, 0.36, 1) 120ms;
+  will-change: opacity, transform;
+}
+.tier3-text-l { transform: translateX(-60px); }
+.tier3-text-r { transform: translateX(60px); }
+.features-reveal.is-visible .tier3-text-l,
+.features-reveal.is-visible .tier3-text-r {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tier3-image-l, .tier3-image-r,
+  .tier3-text-l, .tier3-text-r {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

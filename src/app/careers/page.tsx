@@ -93,7 +93,7 @@ export default function CareersPage() {
             {perks.map((perk) => (
               <div
                 key={perk.title}
-                className="rounded-[2rem] border border-black/6 bg-white/88 p-6 text-center shadow-[0_24px_50px_rgba(102,88,69,0.08)]"
+                className="px-2 py-4 text-center md:px-3 md:py-5"
               >
                 <div className={`mx-auto flex h-12 w-12 items-center justify-center rounded-full ${perk.accent === 'lc' ? 'bg-[#fff7f0]' : 'bg-[#f7f8ff]'}`}>
                   <span className={`h-3 w-3 rounded-full ${perk.accent === 'lc' ? 'bg-[#f28a3a]' : 'bg-[#6c7cf6]'}`} />
@@ -123,7 +123,7 @@ export default function CareersPage() {
             {jobs.map((job) => (
               <div
                 key={job.title}
-                className="group rounded-[2rem] border border-black/6 bg-white/88 p-7 shadow-[0_24px_50px_rgba(102,88,69,0.08)] transition-transform duration-200 hover:-translate-y-1 md:p-8"
+                className="group border-t border-black/8 py-8 transition-transform duration-200 hover:-translate-y-1 md:py-10"
               >
                 <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
                   <div>
@@ -183,7 +183,7 @@ export default function CareersPage() {
 
       <section className="pb-24 md:pb-28">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="rounded-[2.4rem] border border-black/6 bg-[linear-gradient(180deg,rgba(255,255,255,0.94)_0%,rgba(248,244,236,0.96)_100%)] p-8 text-center shadow-[0_26px_55px_rgba(102,88,69,0.08)] md:p-12">
+          <div className="px-2 py-12 text-center md:px-6 md:py-16">
             <div className="mx-auto max-w-2xl">
               <AccentPill label="Reach out" accent="zj" />
               <h2 className="mt-6 font-body text-3xl font-extrabold tracking-[-0.03em] text-[#1f1f1f] md:text-[3rem]">

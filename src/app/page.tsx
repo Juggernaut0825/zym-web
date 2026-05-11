@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar } from '@/components/Navbar'
@@ -33,21 +33,21 @@ const proofCards = [
   {
     title: 'Community check-ins',
     desc: 'Real posts, comments, and shared accountability.',
-    image: '/images/homepage/app-community.png',
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1400&h=1600&fit=crop&q=80',
     accent: 'zj',
     crop: 'object-[50%_20%]',
   },
   {
     title: 'Routine tracking',
     desc: 'Calendar views for meals, training, weight, and trends.',
-    image: '/images/homepage/app-calendar-details.png',
+    image: 'https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=1400&h=1600&fit=crop&q=80',
     accent: 'zj',
     crop: 'object-[50%_22%]',
   },
   {
     title: 'Coach accountability',
     desc: 'Direct AI coach messages that keep progress visible.',
-    image: '/images/homepage/app-coach-chat.png',
+    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1400&h=1600&fit=crop&q=80',
     accent: 'lc',
     crop: 'object-[50%_12%]',
   },
@@ -67,6 +67,22 @@ const communityPills = [
   { label: 'LC discipline', tone: 'lc' },
   { label: 'Shared intelligence', tone: 'neutral' },
 ] as const
+
+function YMark({ className, style }: { className?: string; style?: CSSProperties }) {
+  return (
+    <svg
+      viewBox="0 0 100 115"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      className={className}
+      style={style}
+      aria-hidden="true"
+    >
+      <circle cx="50" cy="15" r="11" />
+      <path d="M 40 32 L 60 32 L 88 108 L 60 108 L 50 50 L 40 108 L 12 108 Z" />
+    </svg>
+  )
+}
 
 function useRevealOnScroll<T extends HTMLElement>() {
   const ref = useRef<T | null>(null)
@@ -134,98 +150,43 @@ export default function Home() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(242,138,58,0.12),_transparent_22%),radial-gradient(circle_at_82%_18%,_rgba(108,124,246,0.12),_transparent_22%),linear-gradient(145deg,_#f7f5f0_0%,_#f3efe7_45%,_#f8f6f2_100%)]" />
         <div className="absolute left-[10%] top-[18%] h-24 w-24 rounded-full bg-[#f28a3a]/10 blur-3xl" />
         <div className="absolute right-[12%] top-[20%] h-28 w-28 rounded-full bg-[#6c7cf6]/10 blur-3xl" />
-        <div className="absolute right-[14%] bottom-[24%] h-10 w-10 rotate-[18deg] rounded-[1.1rem] border border-[#f28a3a]/18 bg-[#f28a3a]/8" />
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+          <span className="hero-wordmark" aria-hidden="true">zym</span>
+        </div>
 
-        <div className="relative mx-auto grid min-h-[calc(100vh-6rem)] max-w-7xl items-center gap-14 px-6 pb-20 pt-12 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,0.38fr)] lg:gap-24 xl:gap-28">
-          <RevealBlock className="max-w-[40rem] lg:max-w-[42rem] lg:pr-8 xl:max-w-[44rem]">
+        <div className="relative mx-auto flex max-w-4xl flex-col items-center px-6 pt-16 pb-24 text-center md:pt-24 md:pb-32">
+          <RevealBlock className="w-full">
             <div className="inline-flex items-center gap-2 rounded-full border border-black/8 bg-white/72 px-4 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-[#5d5d5d] backdrop-blur">
               <span className="h-2.5 w-2.5 rounded-full bg-[#6c7cf6]" />
               AI fitness space
             </div>
 
-            <h1 className="mt-7 max-w-[11.3ch] font-body text-[3.2rem] font-extrabold leading-[0.96] tracking-[-0.035em] text-[#1f1f1f] sm:text-[4.1rem] lg:text-[4.8rem] xl:text-[5.1rem]">
-              <span>Train smarter.</span>
+            <h1 className="mt-8 font-body text-[3.2rem] font-extrabold leading-[0.96] tracking-[-0.035em] text-[#1f1f1f] sm:text-[4.4rem] md:text-[5.2rem] lg:text-[5.8rem] xl:text-[6.2rem]">
+              <span className="block">Train smarter.</span>
               <span className="block text-[#f28a3a]">Eat better.</span>
               <span className="block text-[#6c7cf6]">Stay consistent.</span>
             </h1>
 
-            <p className="mt-6 max-w-[34rem] text-lg leading-8 text-[#575757] sm:text-xl">
-              Your AI-powered fitness space for meals, workouts, and daily progress.
-            </p>
-
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+            <div className="mt-14 flex flex-col items-center justify-center gap-6 sm:flex-row sm:gap-10">
               <a
                 href="https://app.zym8.com/login"
-                className="home-button-primary inline-flex items-center justify-center rounded-[1.45rem] border border-[#f28a3a]/30 bg-[linear-gradient(180deg,rgba(242,138,58,0.18),rgba(242,138,58,0.10))] px-8 py-4 text-sm font-bold uppercase tracking-[0.16em] text-[#7b4517] shadow-[0_14px_30px_rgba(94,71,46,0.12)] transition-transform duration-200 hover:-translate-y-1 hover:border-[#f28a3a]/45"
+                className="home-button-primary inline-flex items-center justify-center rounded-[1.45rem] border border-[#f28a3a]/30 bg-[linear-gradient(180deg,rgba(242,138,58,0.18),rgba(242,138,58,0.10))] px-9 py-4 text-sm font-bold uppercase tracking-[0.16em] text-[#7b4517] shadow-[0_14px_30px_rgba(94,71,46,0.12)] transition-transform duration-200 hover:-translate-y-1 hover:border-[#f28a3a]/45"
               >
                 Get Started
               </a>
               <Link
                 href="/features"
-                className="home-button-secondary inline-flex items-center justify-center rounded-[1.45rem] border border-[#6c7cf6]/28 bg-[linear-gradient(180deg,rgba(108,124,246,0.14),rgba(108,124,246,0.07))] px-8 py-4 text-sm font-bold uppercase tracking-[0.16em] text-[#3642a8] shadow-[0_14px_30px_rgba(67,81,176,0.10)] transition-transform duration-200 hover:-translate-y-1 hover:border-[#6c7cf6]/42"
+                className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-[#3642a8] transition-colors hover:text-[#6c7cf6]"
               >
                 Explore Features
+                <span aria-hidden="true" className="inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
               </Link>
-            </div>
-            <div className="mt-12 grid gap-3 sm:grid-cols-3">
-              {[
-                { label: 'Coach tone', value: 'LC + ZJ' },
-                { label: 'Shared space', value: 'Meals + training' },
-                { label: 'Designed for', value: 'Daily consistency' },
-              ].map((item) => (
-                <div key={item.label} className="home-metric-card rounded-[1.45rem] border border-black/6 bg-white/70 px-4 py-4 backdrop-blur">
-                  <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-[#8d887e]">{item.label}</p>
-                  <p className="mt-2 text-[0.98rem] font-bold tracking-[-0.02em] text-[#1f1f1f]">{item.value}</p>
-                </div>
-              ))}
-            </div>
-          </RevealBlock>
-
-          <RevealBlock className="relative mx-auto flex w-full justify-center lg:justify-end" delay={100}>
-            <div className="hero-product-stack relative w-full max-w-[25rem] pt-8 lg:max-w-[25.5rem] lg:translate-x-4 xl:max-w-[26.5rem] xl:translate-x-6">
-              <div className="absolute inset-x-8 bottom-2 h-24 rounded-full bg-[#6c7cf6]/10 blur-3xl" />
-              <div className="absolute -left-4 top-20 z-10 hidden w-[46%] rotate-[-7deg] overflow-hidden rounded-[1.8rem] border border-white/80 bg-white p-2 shadow-[0_24px_52px_rgba(67,81,176,0.16)] sm:block">
-                <div className="relative aspect-[0.46] overflow-hidden rounded-[1.35rem] bg-[#f7f5f0]">
-                  <Image
-                    src="/images/homepage/app-community.png"
-                    alt="ZYM community screen"
-                    fill
-                    sizes="12rem"
-                    className="object-cover object-[50%_18%] contrast-[1.02] saturate-[1.03]"
-                  />
-                </div>
-              </div>
-
-              <div className="relative ml-auto w-[78%] overflow-hidden rounded-[2.2rem] border border-black/8 bg-white p-3 shadow-[0_30px_80px_rgba(102,88,69,0.15)]">
-                <div className="relative aspect-[0.46] overflow-hidden rounded-[1.7rem] bg-[#f7f5f0]">
-                  <Image
-                    src="/images/homepage/app-calendar-summary.png"
-                    alt="ZYM calendar progress screen"
-                    fill
-                    priority
-                    sizes="(min-width: 1024px) 21rem, 72vw"
-                    className="object-cover object-[50%_16%] brightness-[1.01] contrast-[1.02] saturate-[1.02]"
-                  />
-                </div>
-              </div>
-
-              <div className="absolute -bottom-4 left-2 z-20 w-[52%] rotate-[5deg] overflow-hidden rounded-[1.8rem] border border-white/80 bg-white p-2 shadow-[0_24px_52px_rgba(242,138,58,0.16)]">
-                <div className="relative aspect-[0.46] overflow-hidden rounded-[1.35rem] bg-[#f7f5f0]">
-                  <Image
-                    src="/images/homepage/app-coach-chat.png"
-                    alt="ZYM LC coach chat screen"
-                    fill
-                    sizes="13rem"
-                    className="object-cover object-[50%_12%] contrast-[1.02] saturate-[1.03]"
-                  />
-                </div>
-              </div>
             </div>
           </RevealBlock>
         </div>
       </section>
 
-      <section className="home-chapter chapter-split bg-[#fbfaf7] py-24 md:py-28">
+      <section className="home-chapter chapter-split bg-[#fbfaf7] py-32 md:py-40">
         <div className="mx-auto max-w-6xl px-6">
           <RevealBlock className="mx-auto max-w-3xl text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#f28a3a]/16 bg-white px-4 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#7a6a59] shadow-[0_10px_24px_rgba(102,88,69,0.06)]">
@@ -241,11 +202,11 @@ export default function Home() {
           </RevealBlock>
 
           <RevealBlock delay={90}>
-            <div className="coach-stage relative overflow-hidden rounded-[2.5rem] border border-black/6 bg-[linear-gradient(180deg,rgba(255,255,255,0.92)_0%,rgba(244,239,231,0.88)_100%)] p-5 shadow-[0_28px_56px_rgba(102,88,69,0.08)] sm:p-6">
+            <div className="coach-stage relative overflow-hidden p-0">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(242,138,58,0.10),_transparent_24%),radial-gradient(circle_at_82%_16%,_rgba(108,124,246,0.10),_transparent_24%)]" />
 
               <div className="relative grid gap-6 xl:grid-cols-[minmax(0,0.62fr)_minmax(0,0.38fr)] xl:items-stretch">
-                <div className="coach-portrait-showcase relative overflow-hidden rounded-[2.1rem] border border-black/6 bg-[linear-gradient(180deg,rgba(251,250,247,0.94)_0%,rgba(241,236,228,0.94)_100%)] p-4 sm:p-5">
+                <div className="coach-portrait-showcase relative overflow-hidden p-0">
                   <div className="coach-image-glow absolute left-6 top-6 h-20 w-20 rounded-full bg-[#f28a3a]/12 blur-3xl" />
                   <div className="coach-image-glow absolute bottom-6 right-6 h-24 w-24 rounded-full bg-[#6c7cf6]/12 blur-3xl" />
 
@@ -365,9 +326,7 @@ export default function Home() {
                 <div className="coach-copy-stack">
                   <div
                     key={activeCoach.id}
-                    className={`coach-copy-panel rounded-[2rem] border bg-white/88 p-6 shadow-[0_18px_36px_rgba(102,88,69,0.06)] xl:min-h-full ${
-                      activeCoach.accent === 'lc' ? 'border-[#f28a3a]/16' : 'border-[#6c7cf6]/16'
-                    }`}
+                    className="coach-copy-panel p-2 xl:min-h-full"
                   >
                     <div className="flex flex-wrap items-center gap-3">
                       <span
@@ -434,7 +393,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-chapter chapter-gallery bg-[#f7f5f0] py-24 md:py-28">
+      <section className="home-chapter chapter-gallery bg-[#f7f5f0] py-32 md:py-40">
         <div className="mx-auto max-w-7xl px-6">
           <RevealBlock className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
@@ -454,31 +413,24 @@ export default function Home() {
           <div className="mt-14 grid gap-6 md:grid-cols-3">
             {proofCards.map((card, index) => (
               <RevealBlock key={card.title} delay={index * 90}>
-              <div
-                className="group home-story-card overflow-hidden rounded-[2rem] border border-black/6 bg-white shadow-[0_24px_50px_rgba(102,88,69,0.08)]"
-              >
-                <div className="relative aspect-[0.94] overflow-hidden">
+              <div className="group flex flex-col">
+                <div className="relative aspect-[0.88] overflow-hidden rounded-[1.6rem] md:aspect-[0.95]">
                   <img
                     src={card.image}
                     alt={card.title}
-                    className={`h-full w-full object-cover ${card.crop} brightness-[1.01] contrast-[1.02] saturate-[1.03] transition-transform duration-500 group-hover:scale-[1.03]`}
+                    className={`h-full w-full object-cover ${card.crop} brightness-[1.01] contrast-[1.02] saturate-[1.03] transition-transform duration-700 group-hover:scale-[1.03]`}
                   />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,19,25,0.04)_0%,rgba(17,19,25,0.16)_50%,rgba(17,19,25,0.55)_100%)]" />
-                  <div className="absolute left-5 top-5">
-                    <div
-                      className={`rounded-full px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] backdrop-blur ${
-                        card.accent === 'lc'
-                          ? 'bg-[#f28a3a]/84 text-white'
-                          : 'bg-[#6c7cf6]/84 text-white'
-                      }`}
-                    >
-                      {card.accent === 'lc' ? 'LC style' : 'ZJ style'}
-                    </div>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                    <h3 className="text-2xl font-bold tracking-[-0.02em]">{card.title}</h3>
-                    <p className="mt-2 max-w-xs text-sm leading-6 text-white/85">{card.desc}</p>
-                  </div>
+                </div>
+                <div className="mt-5">
+                  <p
+                    className={`text-[0.62rem] font-semibold uppercase tracking-[0.2em] ${
+                      card.accent === 'lc' ? 'text-[#b16322]' : 'text-[#4251cb]'
+                    }`}
+                  >
+                    {card.accent === 'lc' ? 'LC style' : 'ZJ style'}
+                  </p>
+                  <h3 className="mt-3 text-2xl font-extrabold tracking-[-0.02em] text-[#1f1f1f] md:text-[1.7rem]">{card.title}</h3>
+                  <p className="mt-3 text-base leading-7 text-[#62606a]">{card.desc}</p>
                 </div>
               </div>
               </RevealBlock>
@@ -487,7 +439,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-chapter chapter-capabilities bg-[#fbfaf7] py-24 md:py-28">
+      <section className="home-chapter chapter-capabilities bg-[#fbfaf7] py-32 md:py-40">
         <div className="mx-auto max-w-6xl px-6">
           <RevealBlock className="mx-auto max-w-3xl text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#6c7cf6]/16 bg-white px-4 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#6d73a9] shadow-[0_10px_24px_rgba(102,88,69,0.05)]">
@@ -499,35 +451,31 @@ export default function Home() {
             </h2>
           </RevealBlock>
 
-          <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-14 divide-y divide-black/10 border-y border-black/10">
             {capabilities.map((item, index) => (
-              <RevealBlock key={item.title} delay={index * 60}>
-              <div
-                className={`home-capability-card rounded-[2rem] border bg-white/92 p-6 shadow-[0_20px_45px_rgba(102,88,69,0.07)] ${
-                  item.accent === 'lc' ? 'border-[#f28a3a]/12' : 'border-[#6c7cf6]/12'
-                }`}
-              >
-                <div
-                  className={`inline-flex rounded-full px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.18em] ${
-                    item.accent === 'lc'
-                      ? 'bg-[#f28a3a]/10 text-[#b16322]'
-                      : 'bg-[#6c7cf6]/10 text-[#4a57c9]'
-                  }`}
-                >
-                  Shared capability
+              <RevealBlock key={item.title} delay={index * 50}>
+                <div className="group/spec grid gap-2 px-2 py-6 transition-colors duration-300 hover:bg-[#fbf9f3] md:grid-cols-[3.5rem_minmax(0,1fr)_minmax(0,1.6fr)] md:items-baseline md:gap-8 md:px-4 md:py-7">
+                  <div
+                    className={`text-[0.66rem] font-bold uppercase tracking-[0.24em] text-[#8d887e] transition-colors duration-300 ${
+                      item.accent === 'lc'
+                        ? 'group-hover/spec:text-[#b16322]'
+                        : 'group-hover/spec:text-[#4a57c9]'
+                    }`}
+                  >
+                    {String(index + 1).padStart(2, '0')}
+                  </div>
+                  <h3 className="text-xl font-extrabold tracking-[-0.02em] text-[#1f1f1f] transition-transform duration-300 group-hover/spec:translate-x-1 md:text-[1.5rem]">{item.title}</h3>
+                  <p className="text-base leading-7 text-[#66646e]">{item.desc}</p>
                 </div>
-                <h3 className="mt-4 text-xl font-bold tracking-[-0.02em] text-[#1f1f1f]">{item.title}</h3>
-                <p className="mt-3 text-base leading-7 text-[#66646e]">{item.desc}</p>
-              </div>
               </RevealBlock>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="home-chapter chapter-community bg-[#f7f5f0] py-24 md:py-28">
+      <section className="home-chapter chapter-community bg-[#f7f5f0] py-32 md:py-40">
         <div className="mx-auto max-w-5xl px-6">
-          <RevealBlock className="overflow-hidden rounded-[2.2rem] border border-black/6 bg-[linear-gradient(145deg,rgba(255,255,255,0.9)_0%,rgba(244,238,228,0.94)_100%)] px-8 py-14 text-center shadow-[0_24px_50px_rgba(102,88,69,0.07)] md:px-14">
+          <RevealBlock className="px-2 py-14 text-center md:px-6">
             <div className="mx-auto max-w-3xl">
               <div className="inline-flex items-center gap-2 rounded-full border border-[#f28a3a]/16 bg-white/80 px-4 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#7a6a59]">
                 <span className="h-2.5 w-2.5 rounded-full bg-[#f28a3a]" />
@@ -560,9 +508,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-chapter chapter-cta bg-[#fbfaf7] py-24 md:py-28">
+      <section className="home-chapter chapter-cta bg-[#fbfaf7] py-32 md:py-40">
         <div className="mx-auto max-w-4xl px-6 text-center">
-          <RevealBlock className="rounded-[2.2rem] border border-black/6 bg-white/92 px-8 py-14 shadow-[0_24px_50px_rgba(102,88,69,0.07)] md:px-14">
+          <RevealBlock className="px-2 py-14 md:px-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#6c7cf6]/16 bg-[#6c7cf6]/6 px-4 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#636db9]">
               <span className="h-2.5 w-2.5 rounded-full bg-[#6c7cf6]" />
               Early access
@@ -592,5 +540,5 @@ export default function Home() {
 
       <Footer />
     </main>
-  )
+   )
 }

@@ -33,7 +33,7 @@ const overviewCards: readonly OverviewCard[] = [
     desc: 'Log sessions in a calendar that turns daily reps into trends you can read at a glance.',
     anchor: '#workout',
     kind: 'image',
-    image: '/images/homepage/app-calendar-summary.png',
+    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1400&h=1600&fit=crop&q=80',
     crop: 'object-[50%_18%]',
   },
   {
@@ -43,7 +43,7 @@ const overviewCards: readonly OverviewCard[] = [
     desc: 'Goals, body metrics, and recent history stay in context across every check-in.',
     anchor: '#memory',
     kind: 'image',
-    image: '/images/homepage/app-coach-chat.png',
+    image: 'https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=1400&h=1600&fit=crop&q=80',
     crop: 'object-[50%_10%]',
   },
   {
@@ -53,7 +53,7 @@ const overviewCards: readonly OverviewCard[] = [
     desc: 'Share progress with friends in a calmer, more supportive feed — not a noisy social one.',
     anchor: '#community',
     kind: 'image',
-    image: '/images/homepage/app-community.png',
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1400&h=1600&fit=crop&q=80',
     crop: 'object-[50%_18%]',
   },
 ] as const
@@ -70,7 +70,7 @@ const detailBlocks = [
       'Volume and intensity trends',
       'Rest and recovery awareness',
     ],
-    image: '/images/homepage/app-calendar-summary.png',
+    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1400&h=1600&fit=crop&q=80',
     crop: 'object-[50%_15%]',
   },
   {
@@ -84,7 +84,7 @@ const detailBlocks = [
       'Personalized plan adjustments',
       'Continuity across sessions',
     ],
-    image: '/images/homepage/app-coach-chat.png',
+    image: 'https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=1400&h=1600&fit=crop&q=80',
     crop: 'object-[50%_8%]',
   },
   {
@@ -98,7 +98,7 @@ const detailBlocks = [
       'Weekly check-in rhythm',
       'Quiet, supportive feed',
     ],
-    image: '/images/homepage/app-community.png',
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1400&h=1600&fit=crop&q=80',
     crop: 'object-[50%_18%]',
   },
 ] as const
@@ -114,12 +114,11 @@ function NeutralPill({ label }: { label: string }) {
 
 function PlateThumb() {
   return (
-    <div className="relative h-full w-full bg-[radial-gradient(circle_at_38%_38%,rgba(255,255,255,0.95)_0%,rgba(255,255,255,0.95)_25%,transparent_26%),linear-gradient(145deg,#efe8dd_0%,#faf7f1_58%,#eee6da_100%)]">
-      <div className="absolute left-[22%] top-[15%] h-[70%] w-[56%] rounded-full border-[5px] border-white bg-[#e8dccf] shadow-[0_8px_18px_rgba(102,88,69,0.10)]" />
-      <div className="absolute left-[34%] top-[34%] h-4 w-7 rotate-[-10deg] rounded-full bg-[#d9894b]" />
-      <div className="absolute left-[44%] top-[48%] h-3 w-6 rotate-[14deg] rounded-full bg-[#7fa06a]" />
-      <div className="absolute left-[28%] top-[54%] h-3.5 w-5 rotate-[20deg] rounded-full bg-[#f0d389]" />
-    </div>
+    <img
+      src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=600&fit=crop&q=80"
+      alt="Healthy meal bowl"
+      className="h-full w-full object-cover"
+    />
   )
 }
 
@@ -154,6 +153,65 @@ function useRevealOnScroll<T extends HTMLElement>() {
   return { ref, visible }
 }
 
+function useActiveSection(sectionIds: readonly string[]) {
+  const [activeId, setActiveId] = useState<string>(sectionIds[0])
+
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        if (visible.length > 0) {
+          setActiveId(visible[0].target.id)
+        }
+      },
+      { rootMargin: '-25% 0px -55% 0px' },
+    )
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+
+    return () => observer.disconnect()
+  }, [sectionIds])
+
+  return activeId
+}
+
+const sectionAnchors = [
+  { id: 'food-analysis', label: 'Nutrition' },
+  { id: 'workout', label: 'Training' },
+  { id: 'memory', label: 'Memory' },
+  { id: 'community', label: 'Community' },
+] as const
+
+function SectionAnchorNav({ activeId }: { activeId: string }) {
+  return (
+    <div className="anchor-nav-enter sticky top-[4.75rem] z-30 mx-auto -mt-4 mb-8 hidden w-full max-w-3xl px-6 md:block">
+      <nav className="mx-auto flex items-center justify-center gap-1 rounded-full border border-black/8 bg-white/90 px-2 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] shadow-[0_10px_30px_rgba(102,88,69,0.10)] backdrop-blur">
+        {sectionAnchors.map((s, i) => (
+          <span key={s.id} className="flex items-center">
+            <a
+              href={`#${s.id}`}
+              className={`rounded-full px-3.5 py-1.5 transition-colors ${
+                activeId === s.id
+                  ? 'bg-[#1f1f1f] text-white'
+                  : 'text-[#5f5a52] hover:bg-[#f7f5f0] hover:text-[#1f1f1f]'
+              }`}
+            >
+              {s.label}
+            </a>
+            {i < sectionAnchors.length - 1 && <span aria-hidden="true" className="mx-1 h-3 w-px bg-black/15" />}
+          </span>
+        ))}
+      </nav>
+    </div>
+  )
+}
+
 function RevealBlock({
   children,
   className = '',
@@ -177,6 +235,8 @@ function RevealBlock({
 }
 
 export default function FeaturesPage() {
+  const activeSection = useActiveSection(sectionAnchors.map((s) => s.id))
+
   return (
     <main className="min-h-screen bg-[#f7f5f0] text-[#1f1f1f]">
       <Navbar />
@@ -197,6 +257,8 @@ export default function FeaturesPage() {
         </div>
       </section>
 
+      <SectionAnchorNav activeId={activeSection} />
+
       {/* Tier 1: Capabilities overview */}
       <section className="pb-16 md:pb-20">
         <div className="mx-auto max-w-6xl px-6">
@@ -206,10 +268,10 @@ export default function FeaturesPage() {
                 <a
                   key={card.id}
                   href={card.anchor}
-                  className="group flex flex-col rounded-[2rem] border border-black/6 bg-white/92 p-5 shadow-[0_20px_45px_rgba(102,88,69,0.07)] transition-transform duration-200 hover:-translate-y-1 md:p-6"
+                  className="group flex flex-col transition-all duration-300 hover:-translate-y-2"
                 >
                   <div className="flex items-start gap-5">
-                    <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-[1.2rem] border border-black/6 bg-[#f4f0ea]">
+                    <div className="relative h-28 w-24 shrink-0 overflow-hidden rounded-[1.3rem] bg-[#f4f0ea] md:h-36 md:w-32">
                       {card.kind === 'plate' ? (
                         <PlateThumb />
                       ) : (
@@ -231,7 +293,7 @@ export default function FeaturesPage() {
                   <div className="mt-5 flex justify-end">
                     <span className="inline-flex items-center gap-2 rounded-full border border-black/6 bg-[#f7f5f0] px-3 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.14em] text-[#5e5961] transition-colors group-hover:bg-white">
                       Jump to details
-                      <svg className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-y-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                       </svg>
                     </span>
@@ -244,7 +306,7 @@ export default function FeaturesPage() {
       </section>
 
       {/* Tier 2: Food Analysis spotlight */}
-      <section id="food-analysis" className="bg-[#fbfaf7] py-20 md:py-24">
+      <section id="food-analysis" className="scroll-mt-36 bg-[#fbfaf7] py-20 md:py-24">
         <div className="mx-auto max-w-6xl px-6">
           <RevealBlock className="mx-auto max-w-3xl text-center">
             <NeutralPill label="Capability spotlight · Nutrition" />
@@ -264,20 +326,18 @@ export default function FeaturesPage() {
 
       {/* Tier 3: Compact horizontal detail blocks */}
       <section className="pt-16 pb-24 md:pt-20 md:pb-32">
-        <div className="mx-auto max-w-6xl space-y-8 px-6 md:space-y-10">
+        <div className="mx-auto max-w-6xl space-y-20 px-6 md:space-y-28">
           {detailBlocks.map((block, i) => {
             const isReversed = i % 2 === 1
             return (
               <RevealBlock key={block.id} delay={i * 60}>
                 <article
                   id={block.id}
-                  className="group scroll-mt-28 rounded-[2.4rem] border border-black/6 bg-white/92 p-5 shadow-[0_24px_50px_rgba(102,88,69,0.08)] transition-shadow duration-300 hover:shadow-[0_30px_60px_rgba(102,88,69,0.10)] md:p-6"
+                  className="group scroll-mt-36 lg:flex lg:min-h-[85vh] lg:items-center lg:w-full"
                 >
-                  <div className="grid gap-6 md:gap-8 lg:grid-cols-2 lg:items-stretch">
+                  <div className={`grid gap-6 md:gap-10 lg:items-stretch ${isReversed ? 'lg:grid-cols-[1fr_1.6fr]' : 'lg:grid-cols-[1.6fr_1fr]'}`}>
                     <div
-                      className={`relative aspect-[1.1] overflow-hidden rounded-[1.8rem] border border-black/6 bg-[#f4f0ea] lg:aspect-auto lg:min-h-[22rem] ${
-                        isReversed ? 'lg:order-2' : ''
-                      }`}
+                      className={`${isReversed ? 'tier3-image-r' : 'tier3-image-l'} relative aspect-[0.95] overflow-hidden rounded-[1.8rem] bg-[#f4f0ea] lg:aspect-auto lg:min-h-[40rem] ${isReversed ? 'lg:order-2' : ''}`}
                     >
                       <Image
                         src={block.image}
@@ -294,9 +354,7 @@ export default function FeaturesPage() {
                     </div>
 
                     <div
-                      className={`flex flex-col justify-center px-1 md:px-2 ${
-                        isReversed ? 'lg:order-1' : ''
-                      }`}
+                      className={`${isReversed ? 'tier3-text-l' : 'tier3-text-r'} flex flex-col justify-center px-1 md:px-2 ${isReversed ? 'lg:order-1' : ''}`}
                     >
                       <h3 className="font-body text-2xl font-extrabold tracking-[-0.03em] text-[#1f1f1f] md:text-[2rem]">
                         {block.title}

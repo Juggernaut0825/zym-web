@@ -7,9 +7,15 @@ export function Navbar() {
   return (
     <nav className="site-navbar fixed left-0 right-0 top-0 z-50 backdrop-blur-xl">
       <div className="site-nav-shell mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-3">
-          <Image src="/logo-mark.svg" alt="ZYM Logo" width={40} height={40} />
-          <span className="text-2xl font-bold tracking-tight text-[#1f1f1f]" style={{ fontFamily: 'Syne, system-ui, sans-serif' }}>ZYM</span>
+        <Link href="/" className="flex items-center" aria-label="ZYM home">
+          <Image
+            src="/logo-app.jpg"
+            alt="ZYM"
+            width={44}
+            height={44}
+            priority
+            className="h-11 w-11 shadow-[0_8px_18px_rgba(20,16,40,0.18)]"
+          />
         </Link>
         <div className="hidden items-center gap-8 md:flex">
           <Link href="/" className="site-nav-link text-[#5f5a52] transition-colors hover:text-[#f28a3a]">
@@ -21,12 +27,6 @@ export function Navbar() {
           <Link href="/community" className="site-nav-link text-[#5f5a52] transition-colors hover:text-[#f28a3a]">
             Community
           </Link>
-          {/* <Link href="/open-source" className="text-[#5f5a52] transition-colors hover:text-[#6c7cf6]">
-            Open Source
-          </Link> */}
-          {/* <Link href="/careers" className="text-[#5f5a52] transition-colors hover:text-[#f28a3a]">
-            Careers
-          </Link> */}
         </div>
         <a
           href="https://app.zym8.com/login"

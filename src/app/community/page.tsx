@@ -68,7 +68,7 @@ export default function CommunityPage() {
             {communityCards.map((item) => (
               <div
                 key={item.title}
-                className="rounded-[2rem] border border-black/6 bg-white/88 p-7 shadow-[0_24px_50px_rgba(102,88,69,0.08)] md:p-8"
+                className="py-2 md:py-3"
               >
                 <div className="flex items-center justify-between gap-4">
                   <div
@@ -92,7 +92,7 @@ export default function CommunityPage() {
                   {item.desc}
                 </p>
 
-                <div className="mt-6 rounded-[1.6rem] border border-black/6 bg-[#fbfaf7] p-4">
+                <div className="mt-6 border-t border-black/8 pt-6">
                   <div className="flex items-center justify-between gap-3">
                     <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#87827b]">Community preview</p>
                     <div className="flex -space-x-2">
@@ -110,11 +110,11 @@ export default function CommunityPage() {
                   </div>
 
                   <div className="mt-4 space-y-3">
-                    <div className="rounded-[1.2rem] border border-black/6 bg-white px-4 py-3">
+                    <div className="px-1 py-2">
                       <p className="text-sm font-semibold text-[#1f1f1f]">Logged today&apos;s workout</p>
                       <p className="mt-1 text-sm leading-6 text-[#66646e]">A small update that keeps friends in the loop without turning the page into a noisy feed.</p>
                     </div>
-                    <div className="rounded-[1.2rem] border border-black/6 bg-white px-4 py-3">
+                    <div className="px-1 py-2">
                       <p className="text-sm font-semibold text-[#1f1f1f]">Check-in streak is active</p>
                       <p className="mt-1 text-sm leading-6 text-[#66646e]">Simple rhythm and accountability cues that support consistency rather than overwhelm it.</p>
                     </div>
@@ -128,7 +128,7 @@ export default function CommunityPage() {
 
       <section className="pb-24 md:pb-28">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="rounded-[2.4rem] border border-black/6 bg-[linear-gradient(180deg,rgba(255,255,255,0.94)_0%,rgba(248,244,236,0.96)_100%)] p-8 text-center shadow-[0_26px_55px_rgba(102,88,69,0.08)] md:p-12">
+          <div className="px-2 py-12 text-center md:px-6 md:py-16">
             <div className="mx-auto max-w-2xl">
               <AccentPill label="Early access" accent="zj" />
               <h2 className="mt-6 font-body text-3xl font-extrabold tracking-[-0.03em] text-[#1f1f1f] md:text-[3rem]">
