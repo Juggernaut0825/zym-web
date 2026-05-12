@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
 
@@ -39,171 +40,211 @@ const reasons = [
   },
 ] as const
 
-function AccentPill({ label, accent }: { label: string; accent: 'lc' | 'zj' }) {
+function useRevealOnScroll<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    if (visible) return
+    const node = ref.current
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setVisible(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisible(true)
+            observer.disconnect()
+          }
+        })
+      },
+      { threshold: 0.16, rootMargin: '0px 0px -10% 0px' },
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [visible])
+
+  return { ref, visible }
+}
+
+function RevealBlock({
+  children,
+  className = '',
+  delay = 0,
+}: {
+  children: ReactNode
+  className?: string
+  delay?: number
+}) {
+  const { ref, visible } = useRevealOnScroll<HTMLDivElement>()
+
   return (
     <div
-      className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] shadow-[0_10px_24px_rgba(102,88,69,0.06)] ${
-        accent === 'lc'
-          ? 'border-[#f28a3a]/18 bg-white text-[#9b6436]'
-          : 'border-[#6c7cf6]/18 bg-white text-[#6069ad]'
-      }`}
+      ref={ref}
+      className={`features-reveal ${visible ? 'is-visible' : ''} ${className}`.trim()}
+      style={{ transitionDelay: `${delay}ms` }}
     >
-      <span className={`h-2.5 w-2.5 rounded-full ${accent === 'lc' ? 'bg-[#f28a3a]' : 'bg-[#6c7cf6]'}`} />
-      {label}
+      {children}
     </div>
+  )
+}
+
+function Eyebrow({ children, tone = 'light' }: { children: ReactNode; tone?: 'light' | 'dark' }) {
+  const color = tone === 'dark' ? 'text-[#a09d96]' : 'text-[#6c6a64]'
+  return (
+    <p className={`text-[0.72rem] font-medium uppercase tracking-[0.18em] ${color}`}>{children}</p>
   )
 }
 
 export default function OpenSourcePage() {
   return (
-    <main className="min-h-screen bg-[#f7f5f0] text-[#1f1f1f]">
+    <main className="min-h-screen bg-[#faf9f5] text-[#141413]">
       <Navbar />
 
-      <section className="relative overflow-hidden pt-28 pb-16 md:pt-32 md:pb-20">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(242,138,58,0.10),_transparent_22%),radial-gradient(circle_at_86%_15%,_rgba(108,124,246,0.10),_transparent_24%),linear-gradient(180deg,_#f7f5f0_0%,_#f4f1ea_100%)]" />
-        <div className="relative mx-auto max-w-7xl px-6">
-          <div className="mx-auto max-w-3xl text-center">
-            <AccentPill label="Open source" accent="zj" />
-            <h1 className="mt-6 font-body text-4xl font-extrabold leading-[0.98] tracking-[-0.035em] text-[#1f1f1f] sm:text-5xl md:text-[4rem]">
-              Built by the community
+      {/* HERO — cream canvas, serif display */}
+      <section className="pt-36 pb-20 md:pt-44 md:pb-24">
+        <div className="mx-auto max-w-5xl px-6">
+          <RevealBlock>
+            <Eyebrow>Open source · MIT licensed</Eyebrow>
+            <h1 className="font-display-serif mt-8 text-5xl leading-[1.05] tracking-[-0.025em] text-[#141413] sm:text-6xl md:text-[5.5rem] lg:text-[6rem]">
+              Built by the community.
             </h1>
-            <p className="mt-6 text-lg leading-8 text-[#62606a] md:text-xl">
+            <p className="mt-8 max-w-2xl text-lg leading-[1.6] text-[#3d3d3a] md:text-xl">
               ZYM&apos;s core is open source under the MIT license. Contribute, customize, or build on the same foundation in a more transparent way.
             </p>
-          </div>
+          </RevealBlock>
         </div>
       </section>
 
-      <section className="pb-20 md:pb-24">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="mx-auto max-w-4xl">
+      {/* DARK PRODUCT MOCKUP — Claude signature, the repo as product chrome on dark */}
+      <section className="bg-[#181715] py-24 md:py-32">
+        <div className="mx-auto max-w-6xl px-6">
+          <RevealBlock>
+            <div className="max-w-3xl">
+              <Eyebrow tone="dark">Spotlight · Repository</Eyebrow>
+              <h2 className="font-display-serif mt-6 text-4xl leading-[1.1] tracking-[-0.025em] text-[#faf9f5] md:text-[3.5rem]">
+                skill_zym, in the open.
+              </h2>
+              <p className="mt-6 max-w-2xl text-base leading-[1.6] text-[#a09d96] md:text-lg">
+                The AI-powered fitness and lifestyle assistant infrastructure that powers ZYM — vision support, local-first flexibility, and a transparent architecture you can read end to end.
+              </p>
+            </div>
+
             <a
               href="https://github.com/Juggernaut0825/skill_zym"
               target="_blank"
               rel="noopener noreferrer"
-              className="group block py-4 transition-transform duration-200 hover:-translate-y-1 md:py-6"
+              className="group mt-14 block rounded-xl border border-white/10 bg-white/[0.03] p-8 transition-colors duration-300 hover:bg-white/[0.06] md:p-12"
             >
               <div className="flex flex-col gap-8 md:flex-row md:items-start">
-                <div className="flex h-20 w-20 shrink-0 items-center justify-center">
-                  <svg className="h-10 w-10 text-[#1f1f1f]" viewBox="0 0 24 24" fill="currentColor">
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-[#faf9f5]">
+                  <svg className="h-9 w-9 text-[#141413]" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                   </svg>
                 </div>
 
                 <div className="flex-1">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <h2 className="font-body text-[2rem] font-extrabold tracking-[-0.03em] text-[#1f1f1f]">skill_zym</h2>
-                    <div className="rounded-full border border-[#6c7cf6]/16 bg-[#f7f8ff] px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#6670b8]">
-                      Python
-                    </div>
-                    <div className="rounded-full border border-[#f28a3a]/16 bg-[#fff7f0] px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#a06b46]">
-                      MIT
-                    </div>
+                  <div className="flex flex-wrap items-center gap-4">
+                    <h3 className="font-display-serif text-3xl leading-[1.15] tracking-[-0.025em] text-[#faf9f5] md:text-4xl">skill_zym</h3>
+                    <span className="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-[#a09d96]">Python · MIT</span>
                   </div>
 
-                  <p className="mt-5 max-w-3xl text-lg leading-8 text-[#66646e]">
+                  <p className="mt-5 max-w-3xl text-base leading-[1.6] text-[#a09d96] md:text-lg">
                     AI-powered fitness and lifestyle assistant infrastructure for building more capable coaching experiences with vision support and local-first flexibility.
                   </p>
 
-                  <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                     {repoFeatures.map((feature, index) => (
-                      <div
+                      <li
                         key={feature}
-                        className="flex items-center gap-3 py-2 text-sm font-medium text-[#45424c]"
+                        className="flex items-start gap-3 text-base leading-[1.6] text-[#a09d96]"
                       >
                         <span
-                          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
-                            index % 2 === 0 ? 'bg-[#f28a3a]/12' : 'bg-[#6c7cf6]/12'
+                          className={`mt-[0.7rem] h-1.5 w-1.5 shrink-0 rounded-full ${
+                            index % 2 === 0 ? 'bg-[#f28a3a]' : 'bg-[#6c7cf6]'
                           }`}
-                        >
-                          <span className={`h-2.5 w-2.5 rounded-full ${index % 2 === 0 ? 'bg-[#f28a3a]' : 'bg-[#6c7cf6]'}`} />
-                        </span>
+                        />
                         <span>{feature}</span>
-                      </div>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
 
-                  <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-black/6 bg-[#f7f5f0] px-4 py-2 text-sm font-semibold text-[#4b4a54] transition-colors group-hover:bg-white">
-                    <span>View on GitHub</span>
-                    <svg className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </div>
+                  <span className="mt-10 inline-flex items-center gap-2 text-sm font-medium text-[#faf9f5] transition-colors group-hover:text-[#f28a3a]">
+                    View on GitHub
+                    <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+                  </span>
                 </div>
               </div>
             </a>
-          </div>
+          </RevealBlock>
         </div>
       </section>
 
-      <section className="pb-20 md:pb-24">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="mx-auto max-w-3xl text-center">
-            <AccentPill label="Why open source" accent="lc" />
-            <h2 className="mt-6 font-body text-3xl font-extrabold tracking-[-0.03em] text-[#1f1f1f] md:text-[3rem]">
-              Why open source?
-            </h2>
-          </div>
+      {/* WHY OPEN SOURCE — canvas editorial blocks */}
+      <section className="bg-[#faf9f5] py-24 md:py-32">
+        <div className="mx-auto max-w-6xl px-6">
+          <RevealBlock>
+            <div className="mb-16 max-w-2xl">
+              <Eyebrow>Why open source</Eyebrow>
+              <h2 className="font-display-serif mt-6 text-4xl leading-[1.1] tracking-[-0.025em] text-[#141413] md:text-5xl">
+                Why open source?
+              </h2>
+            </div>
+          </RevealBlock>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {reasons.map((reason) => (
-              <div
-                key={reason.title}
-                className="px-2 py-4 text-center md:px-3 md:py-6"
-              >
-                <div
-                  className={`mx-auto flex h-16 w-16 items-center justify-center rounded-[1.4rem] ${
-                    reason.accent === 'lc' ? 'bg-[#fff7f0] text-[#b16322]' : 'bg-[#f7f8ff] text-[#4251cb]'
-                  }`}
-                >
-                  <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    {reason.icon}
-                  </svg>
-                </div>
-                <h3 className="mt-5 font-body text-[1.55rem] font-extrabold tracking-[-0.03em] text-[#1f1f1f]">
+          <div className="grid gap-y-16 md:grid-cols-3 md:gap-x-12">
+            {reasons.map((reason, i) => (
+              <RevealBlock key={reason.title} delay={i * 80}>
+                <Eyebrow>{reason.accent === 'lc' ? 'LC' : 'ZJ'} principle</Eyebrow>
+                <h3 className="font-display-serif mt-4 text-3xl leading-[1.15] tracking-[-0.025em] text-[#141413] md:text-[2rem]">
                   {reason.title}
                 </h3>
-                <p className="mt-4 text-base leading-7 text-[#66646e]">
+                <p className="mt-5 text-base leading-[1.6] text-[#3d3d3a]">
                   {reason.desc}
                 </p>
-              </div>
+              </RevealBlock>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="pb-24 md:pb-28">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="px-2 py-12 text-center md:px-6 md:py-16">
-            <div className="mx-auto max-w-2xl">
-              <AccentPill label="Contributing" accent="zj" />
-              <h2 className="mt-6 font-body text-3xl font-extrabold tracking-[-0.03em] text-[#1f1f1f] md:text-[3rem]">
-                Contributing to ZYM
+      {/* CORAL CTA — full-bleed LC orange callout */}
+      <section className="bg-[#efe9de] py-20 md:py-28">
+        <div className="mx-auto max-w-5xl px-6">
+          <RevealBlock>
+            <div className="rounded-xl bg-[#f28a3a] px-8 py-16 md:px-16 md:py-20">
+              <h2 className="font-display-serif text-4xl leading-[1.08] tracking-[-0.025em] text-white md:text-[3.4rem]">
+                Contribute to ZYM.
               </h2>
-              <p className="mt-5 text-lg leading-8 text-[#66646e]">
+              <p className="mt-6 max-w-xl text-base leading-[1.6] text-white/90 md:text-lg">
                 We welcome contributions, whether that means improving docs, fixing bugs, or extending the product&apos;s core capabilities.
               </p>
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+                <a
+                  href="https://github.com/Juggernaut0825/skill_zym"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#faf9f5] px-7 py-3.5 text-sm font-medium text-[#141413] shadow-[0_8px_24px_rgba(20,20,19,0.18)] transition-transform duration-200 hover:-translate-y-0.5 active:scale-[0.96]"
+                >
+                  View Repository
+                  <span aria-hidden="true">→</span>
+                </a>
+                <a
+                  href="https://github.com/Juggernaut0825/skill_zym/issues"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 text-sm font-medium text-white/90 transition-colors hover:text-white"
+                >
+                  Report an Issue
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
             </div>
-
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <a
-                href="https://github.com/Juggernaut0825/skill_zym"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-[1.45rem] border border-[#f28a3a]/30 bg-[linear-gradient(180deg,rgba(242,138,58,0.18),rgba(242,138,58,0.10))] px-8 py-4 text-sm font-bold uppercase tracking-[0.16em] text-[#7b4517] shadow-[0_14px_30px_rgba(94,71,46,0.12)] transition-transform duration-200 hover:-translate-y-1 hover:border-[#f28a3a]/45"
-              >
-                View Repository
-              </a>
-              <a
-                href="https://github.com/Juggernaut0825/skill_zym/issues"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-[1.45rem] border border-[#6c7cf6]/28 bg-[linear-gradient(180deg,rgba(108,124,246,0.14),rgba(108,124,246,0.07))] px-8 py-4 text-sm font-bold uppercase tracking-[0.16em] text-[#3642a8] shadow-[0_14px_30px_rgba(67,81,176,0.10)] transition-transform duration-200 hover:-translate-y-1 hover:border-[#6c7cf6]/42"
-              >
-                Report an Issue
-              </a>
-            </div>
-          </div>
+          </RevealBlock>
         </div>
       </section>
 

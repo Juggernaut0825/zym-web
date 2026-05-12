@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
 
@@ -27,132 +28,162 @@ const communityCards = [
   },
 ] as const
 
-function AccentPill({ label, accent }: { label: string; accent: 'lc' | 'zj' }) {
+function useRevealOnScroll<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    if (visible) return
+    const node = ref.current
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setVisible(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisible(true)
+            observer.disconnect()
+          }
+        })
+      },
+      { threshold: 0.16, rootMargin: '0px 0px -10% 0px' },
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [visible])
+
+  return { ref, visible }
+}
+
+function RevealBlock({
+  children,
+  className = '',
+  delay = 0,
+}: {
+  children: ReactNode
+  className?: string
+  delay?: number
+}) {
+  const { ref, visible } = useRevealOnScroll<HTMLDivElement>()
+
   return (
     <div
-      className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.2em] shadow-[0_10px_24px_rgba(102,88,69,0.06)] ${
-        accent === 'lc'
-          ? 'border-[#f28a3a]/18 bg-white text-[#9b6436]'
-          : 'border-[#6c7cf6]/18 bg-white text-[#6069ad]'
-      }`}
+      ref={ref}
+      className={`features-reveal ${visible ? 'is-visible' : ''} ${className}`.trim()}
+      style={{ transitionDelay: `${delay}ms` }}
     >
-      <span className={`h-2.5 w-2.5 rounded-full ${accent === 'lc' ? 'bg-[#f28a3a]' : 'bg-[#6c7cf6]'}`} />
-      {label}
+      {children}
     </div>
+  )
+}
+
+function Eyebrow({ children, tone = 'light' }: { children: ReactNode; tone?: 'light' | 'dark' }) {
+  const color = tone === 'dark' ? 'text-[#a09d96]' : 'text-[#6c6a64]'
+  return (
+    <p className={`text-[0.72rem] font-medium uppercase tracking-[0.18em] ${color}`}>{children}</p>
   )
 }
 
 export default function CommunityPage() {
   return (
-    <main className="min-h-screen bg-[#f7f5f0] text-[#1f1f1f]">
+    <main className="min-h-screen bg-[#faf9f5] text-[#141413]">
       <Navbar />
 
-      <section className="relative overflow-hidden pt-28 pb-16 md:pt-32 md:pb-20">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(242,138,58,0.10),_transparent_22%),radial-gradient(circle_at_85%_15%,_rgba(108,124,246,0.10),_transparent_24%),linear-gradient(180deg,_#f7f5f0_0%,_#f4f1ea_100%)]" />
-        <div className="relative mx-auto max-w-6xl px-6">
-          <div className="mx-auto max-w-3xl text-center">
-            <AccentPill label="Coming soon" accent="lc" />
-            <h1 className="mt-6 font-body text-4xl font-extrabold leading-[0.98] tracking-[-0.035em] text-[#1f1f1f] sm:text-5xl md:text-[4rem]">
-              Health is better together
+      {/* HERO — cream canvas, serif display */}
+      <section className="pt-36 pb-20 md:pt-44 md:pb-24">
+        <div className="mx-auto max-w-5xl px-6">
+          <RevealBlock>
+            <Eyebrow>Community · Coming soon</Eyebrow>
+            <h1 className="font-display-serif mt-8 text-5xl leading-[1.05] tracking-[-0.025em] text-[#141413] sm:text-6xl md:text-[5.5rem] lg:text-[6rem]">
+              Health is better together.
             </h1>
-            <p className="mt-6 text-lg leading-8 text-[#62606a] md:text-xl">
+            <p className="mt-8 max-w-2xl text-lg leading-[1.6] text-[#3d3d3a] md:text-xl">
               Connect with friends, share progress, and stay accountable in a community layer that feels supportive, believable, and calm.
             </p>
-          </div>
+          </RevealBlock>
         </div>
       </section>
 
-      <section className="pb-20 md:pb-24">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="grid gap-6 md:grid-cols-3">
-            {communityCards.map((item) => (
-              <div
-                key={item.title}
-                className="py-2 md:py-3"
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <div
-                    className={`rounded-full px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] ${
-                      item.accent === 'lc'
-                        ? 'border border-[#f28a3a]/16 bg-[#fff7f0] text-[#a06b46]'
-                        : 'border border-[#6c7cf6]/16 bg-[#f7f8ff] text-[#6670b8]'
-                    }`}
-                  >
-                    {item.badge}
+      {/* COMMUNITY BLOCKS — alternating canvas / surface-card editorial */}
+      {communityCards.map((item, index) => {
+        const isCardSurface = index % 2 === 0
+        const bgClass = isCardSurface ? 'bg-[#efe9de]' : 'bg-[#faf9f5]'
+        return (
+          <section key={item.title} className={`${bgClass} py-24 md:py-32`}>
+            <div className="mx-auto max-w-5xl px-6">
+              <RevealBlock>
+                <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-20">
+                  <div>
+                    <Eyebrow>{item.badge}</Eyebrow>
+                    <h2 className="font-display-serif mt-5 text-4xl leading-[1.08] tracking-[-0.025em] text-[#141413] md:text-5xl">
+                      {item.title}
+                    </h2>
+                    <p className="mt-6 text-lg leading-[1.6] text-[#3d3d3a]">
+                      {item.desc}
+                    </p>
+                    <div className="mt-8 inline-flex items-center gap-2 text-[0.7rem] font-medium uppercase tracking-[0.18em] text-[#6c6a64]">
+                      <span
+                        className={`h-2 w-2 rounded-full ${
+                          item.accent === 'lc' ? 'bg-[#f28a3a]' : 'bg-[#6c7cf6]'
+                        }`}
+                      />
+                      <span>{item.accent === 'lc' ? 'LC tone' : 'ZJ tone'} · Same intelligence</span>
+                    </div>
                   </div>
-                  <div className="rounded-full border border-black/6 bg-[#f7f5f0] px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#7f7a72]">
-                    Shared system
-                  </div>
-                </div>
 
-                <h2 className="mt-6 font-body text-[1.8rem] font-extrabold tracking-[-0.03em] text-[#1f1f1f]">
-                  {item.title}
-                </h2>
-                <p className="mt-4 text-base leading-7 text-[#66646e]">
-                  {item.desc}
-                </p>
-
-                <div className="mt-6 border-t border-black/8 pt-6">
-                  <div className="flex items-center justify-between gap-3">
-                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#87827b]">Community preview</p>
-                    <div className="flex -space-x-2">
-                      {item.people.map((person, index) => (
-                        <div
+                  <div className="lg:pl-8">
+                    <Eyebrow>Built with</Eyebrow>
+                    <ul className="mt-5 space-y-4">
+                      {item.people.map((person) => (
+                        <li
                           key={person}
-                          className={`flex h-10 w-10 items-center justify-center rounded-full border-2 border-white text-xs font-bold text-white ${
-                            index % 2 === 0 ? 'bg-[#f28a3a]' : 'bg-[#6c7cf6]'
-                          }`}
+                          className="flex items-center gap-4 text-base leading-[1.6] text-[#3d3d3a]"
                         >
-                          {person.slice(0, 1)}
-                        </div>
+                          <span
+                            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-medium text-[#faf9f5] ${
+                              item.accent === 'lc' ? 'bg-[#f28a3a]' : 'bg-[#6c7cf6]'
+                            }`}
+                          >
+                            {person.slice(0, 1)}
+                          </span>
+                          <span>{person}</span>
+                        </li>
                       ))}
-                    </div>
-                  </div>
-
-                  <div className="mt-4 space-y-3">
-                    <div className="px-1 py-2">
-                      <p className="text-sm font-semibold text-[#1f1f1f]">Logged today&apos;s workout</p>
-                      <p className="mt-1 text-sm leading-6 text-[#66646e]">A small update that keeps friends in the loop without turning the page into a noisy feed.</p>
-                    </div>
-                    <div className="px-1 py-2">
-                      <p className="text-sm font-semibold text-[#1f1f1f]">Check-in streak is active</p>
-                      <p className="mt-1 text-sm leading-6 text-[#66646e]">Simple rhythm and accountability cues that support consistency rather than overwhelm it.</p>
-                    </div>
+                    </ul>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              </RevealBlock>
+            </div>
+          </section>
+        )
+      })}
 
-      <section className="pb-24 md:pb-28">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="px-2 py-12 text-center md:px-6 md:py-16">
-            <div className="mx-auto max-w-2xl">
-              <AccentPill label="Early access" accent="zj" />
-              <h2 className="mt-6 font-body text-3xl font-extrabold tracking-[-0.03em] text-[#1f1f1f] md:text-[3rem]">
-                Join the journey
+      {/* CORAL CTA — full-bleed LC orange callout */}
+      <section className="bg-[#faf9f5] py-20 md:py-28">
+        <div className="mx-auto max-w-5xl px-6">
+          <RevealBlock>
+            <div className="rounded-xl bg-[#f28a3a] px-8 py-16 md:px-16 md:py-20">
+              <h2 className="font-display-serif text-4xl leading-[1.08] tracking-[-0.025em] text-white md:text-[3.4rem]">
+                Join the journey.
               </h2>
-              <p className="mt-5 text-lg leading-8 text-[#66646e]">
+              <p className="mt-6 max-w-xl text-base leading-[1.6] text-white/90 md:text-lg">
                 Request early access to be among the first people to try the community layer when it launches.
               </p>
-            </div>
-
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <a
                 href="https://github.com/Juggernaut0825/skill_zym"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-[1.45rem] border border-[#f28a3a]/30 bg-[linear-gradient(180deg,rgba(242,138,58,0.18),rgba(242,138,58,0.10))] px-8 py-4 text-sm font-bold uppercase tracking-[0.16em] text-[#7b4517] shadow-[0_14px_30px_rgba(94,71,46,0.12)] transition-transform duration-200 hover:-translate-y-1 hover:border-[#f28a3a]/45"
+                className="mt-10 inline-flex items-center justify-center gap-2 rounded-lg bg-[#faf9f5] px-7 py-3.5 text-sm font-medium text-[#141413] shadow-[0_8px_24px_rgba(20,20,19,0.18)] transition-transform duration-200 hover:-translate-y-0.5 active:scale-[0.96]"
               >
                 Request Access
+                <span aria-hidden="true">→</span>
               </a>
-              <div className="rounded-full border border-[#6c7cf6]/18 bg-white px-4 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#6069ad] shadow-[0_10px_24px_rgba(102,88,69,0.05)]">
-                Supportive social layer
-              </div>
             </div>
-          </div>
+          </RevealBlock>
         </div>
       </section>
 
